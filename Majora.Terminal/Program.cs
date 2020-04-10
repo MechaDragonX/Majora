@@ -1,11 +1,9 @@
 ﻿using ATL;
-using ATL.AudioData;
 using Bassoon;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 
 namespace Majora.Terminal
 {
@@ -44,11 +42,22 @@ namespace Majora.Terminal
                     else if(extensions[file.Item1] == "naudio")
                     {
                         // playWithNAudio();
-                        AudioFileReader audioFile = new AudioFileReader(file.Item2);
-                        WaveOutEvent outputDevice = new WaveOutEvent();
+                        AudioFileReader audioFile;
+                        WaveOutEvent outputDevice;
+                        try
+                        {
+                            audioFile = new AudioFileReader(file.Item2);
+                            outputDevice = new WaveOutEvent();
+                        }
+                        catch(Exception e)
+                        {
+                            LogError(e);
+                            return;
+                        }
+
                         outputDevice.Init(audioFile);
                         outputDevice.Play();
-                        if (outputDevice.PlaybackState == PlaybackState.Playing)
+                        if(outputDevice.PlaybackState == PlaybackState.Playing)
                             NowPlaying(file.Item2);
                         Console.WriteLine("Press any key to stop");
                         Console.ReadKey();
@@ -84,6 +93,12 @@ namespace Majora.Terminal
             }
         }
 
+        private static void LogError(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"ERROR: { e.Message }");
+            Console.ResetColor();
+        }
         private static Tuple<string, string> GetFile()
         {
             string extension;
@@ -115,9 +130,7 @@ namespace Majora.Terminal
             try { sound = new Sound(path); }
             catch(Exception e)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERROR: { e.Message }");
-                Console.ResetColor();
+                LogError(e);
                 return;
             }
 
