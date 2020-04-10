@@ -23,5 +23,30 @@ namespace Majora.Terminal
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("That command is not supported or is misspelled!\n");
         }
+        public static bool YesNo()
+        {
+            string input;
+            Console.WriteLine("Do you wanna play another file? (y/n)");
+            while(true)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                input = Console.ReadLine();
+                if(input.ToLower() == "y" || input.ToLower() == "yes")
+                {
+                    Console.ResetColor();
+                    return true;
+                }
+                else if(input.ToLower() == "n" || input.ToLower() == "no")
+                {
+                    Console.ResetColor();
+                    return false;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Please type yes or no\n");
+                }
+            }
+        }
     }
 }

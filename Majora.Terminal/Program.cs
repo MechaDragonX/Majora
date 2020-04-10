@@ -31,43 +31,22 @@ namespace Majora.Terminal
         {
             Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
 
-            Bassoon bassoon = new Bassoon();
-            using(bassoon.Engine)
+            while(true)
             {
-                while(true)
+                Tuple<string, string> file = GetFile();
+
+                if(extensions[file.Item1] == "bassoon")
                 {
-                    Tuple<string, string> file = GetFile();
-
-                    if(extensions[file.Item1] == "bassoon")
+                    Bassoon bassoon = new Bassoon();
+                    using(bassoon.Engine)
                         PlayWithBassoon(bassoon, file.Item2);
-                    else if(extensions[file.Item1] == "naudio")
-                        PlayWithNAudio(new NAudio(), file.Item2);
-                    Console.ResetColor();
-
-                    string input;
-                    Console.WriteLine("Do you wanna play another file? (y/n)");
-                    while(true)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        input = Console.ReadLine();
-                        if(input.ToLower() == "y" || input.ToLower() == "yes")
-                        {
-                            Console.ResetColor();
-                            break;
-                        }
-                        else if (input.ToLower() == "n" || input.ToLower() == "no")
-                        {
-                            Console.ResetColor();
-                            return;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("Please type yes or no\n");
-                        }
-                    }
-                    Console.WriteLine("Write the name of the file extension you want to test!");
                 }
+                else if(extensions[file.Item1] == "naudio")
+                    PlayWithNAudio(new NAudio(), file.Item2);
+                Console.ResetColor();
+                if(!AudioLibrary.YesNo())
+                    return;
+                Console.WriteLine("Write the name of the file extension you want to test!");
             }
         }
 
