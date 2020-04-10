@@ -4,6 +4,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Majora.Terminal
 {
@@ -15,19 +16,61 @@ namespace Majora.Terminal
             { "mp3", "mm2_wily1-fc.mp3" },
             { "m4a", "gerudo_valley.m4a" },
             { "flac", "tank.flac" },
-            { "ogg", "cruel_angel's_thesis.ogg" }
+            { "ogg", "cruel_angel's_thesis.ogg" },
+            { "aiff", "yume_cinderella.aiff" },
+            { "opus", "sou.opus" }, // Not supported
+            { "w64", "fukashigi_no_carte.w64" },
+            { "wv", "gypsy_bard-ex.wv" }, // Not supported
+            { "mpc", "zenzenzense.mpc" }, // Not supported
+            { "au", "shinzou_wo_sasageyo.au" }
         };
-        private static readonly Dictionary<string, string> extensions = new Dictionary<string, string>()
+        private static readonly Dictionary<string, bool> nAudioExtensions = new Dictionary<string, bool>()
         {
-            { "wav", "bassoon" },
-            { "flac", "bassoon" },
-            { "ogg", "bassoon" },
-            { "mp3", "naudio" },
-            { "aac", "naudio" },
-            { "m4a", "naudio" }
+            { "mp3", false },
+            { "aac", false },
+            { "m4a", false },
         };
 
         static void Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            
+
+            Console.WriteLine("Internal or Global Test?");
+            string input;
+            while (true)
+            {
+                input = Console.ReadLine();
+                if(input.ToLower() == "internal" || input.ToLower() == "i")
+                {
+                    InternalTest();
+                    break;
+                }
+                else if(input.ToLower() == "global" || input.ToLower() == "g")
+                {
+                    while(true)
+                    {
+                        Console.WriteLine("Please write the path to your file!");
+                        string path = Console.ReadLine();
+                        Tuple<string, string> file = GetFile(path);
+
+                        if(nAudioExtensions.ContainsKey(file.Item1))
+                            PlayWithNAudio(new NAudio(), file.Item2);
+                        else
+                        {
+                            Bassoon bassoon = new Bassoon();
+                            using (bassoon.Engine)
+                                PlayWithBassoon(bassoon, file.Item2);
+                        }
+                        Console.ResetColor();
+                        if(!AudioLibrary.YesNo())
+                            return;
+                    }
+                }
+            }
+        }
+
+        private static void InternalTest()
         {
             Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
 
@@ -35,14 +78,14 @@ namespace Majora.Terminal
             {
                 Tuple<string, string> file = GetFile();
 
-                if(extensions[file.Item1] == "bassoon")
+                if(nAudioExtensions.ContainsKey(file.Item1))
+                    PlayWithNAudio(new NAudio(), file.Item2);
+                else
                 {
                     Bassoon bassoon = new Bassoon();
-                    using(bassoon.Engine)
+                    using (bassoon.Engine)
                         PlayWithBassoon(bassoon, file.Item2);
                 }
-                else if(extensions[file.Item1] == "naudio")
-                    PlayWithNAudio(new NAudio(), file.Item2);
                 Console.ResetColor();
                 if(!AudioLibrary.YesNo())
                     return;
@@ -68,6 +111,22 @@ namespace Majora.Terminal
             (
                 extension,
                 Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "Test", testFiles[extension])
+            );
+        }
+        private static Tuple<string, string> GetFile(string path)
+        {
+            if(!File.Exists(path))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"ERROR: File doesn't exist!");
+                Console.ResetColor();
+                return null;
+            }
+
+            return new Tuple<string, string>
+            (
+                Path.GetExtension(path)[1..],
+                path
             );
         }
         private static void LogError(Exception e)
