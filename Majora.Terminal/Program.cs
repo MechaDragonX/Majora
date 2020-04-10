@@ -54,12 +54,12 @@ namespace Majora.Terminal
                         string path = Console.ReadLine();
                         Tuple<string, string> file = GetFile(path);
 
-                        if(nAudioExtensions.ContainsKey(file.Item1))
+                        if(nAudioExtensions.Contains(file.Item1))
                             PlayWithNAudio(new NAudio(), file.Item2);
                         else
                         {
                             Bassoon bassoon = new Bassoon();
-                            using (bassoon.Engine)
+                            using(bassoon.Engine)
                                 PlayWithBassoon(bassoon, file.Item2);
                         }
                         Console.ResetColor();
@@ -78,7 +78,7 @@ namespace Majora.Terminal
             {
                 Tuple<string, string> file = GetFile();
 
-                if(nAudioExtensions.ContainsKey(file.Item1))
+                if(nAudioExtensions.Contains(file.Item1))
                     PlayWithNAudio(new NAudio(), file.Item2);
                 else
                 {
