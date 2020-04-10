@@ -24,11 +24,11 @@ namespace Majora.Terminal
             { "mpc", "zenzenzense.mpc" }, // Not supported
             { "au", "shinzou_wo_sasageyo.au" }
         };
-        private static readonly Dictionary<string, bool> nAudioExtensions = new Dictionary<string, bool>()
+        private static readonly List<string> nAudioExtensions = new List<string>()
         {
-            { "mp3", false },
-            { "aac", false },
-            { "m4a", false },
+            "mp3",
+            "aac",
+            "m4a"
         };
 
         static void Main(string[] args)
