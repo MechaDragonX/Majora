@@ -30,26 +30,28 @@ namespace Majora.Terminal
             "aac",
             "m4a"
         };
-
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            
 
             Console.WriteLine("Internal or Global Test?");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             string input;
-            while (true)
+            while(true)
             {
                 input = Console.ReadLine();
                 if(input.ToLower() == "internal" || input.ToLower() == "i")
                 {
-                    InternalTest();
+                    Console.ResetColor();
+                    Console.WriteLine("What is the path to the test directory?");
+                    InternalTest(Console.ReadLine());
                     break;
                 }
                 else if(input.ToLower() == "global" || input.ToLower() == "g")
                 {
                     while(true)
                     {
+                        Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
                         Console.WriteLine("Please write the path to your file!");
                         string path = Console.ReadLine();
                         Tuple<string, string> file = GetFile(path);
@@ -68,22 +70,23 @@ namespace Majora.Terminal
                     }
                 }
             }
+            Console.ReadKey();
         }
 
-        private static void InternalTest()
+        private static void InternalTest(string path)
         {
             Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
 
             while(true)
             {
-                Tuple<string, string> file = GetFile();
+                Tuple<string, string> file = GetTestDir(path);
 
                 if(nAudioExtensions.Contains(file.Item1))
                     PlayWithNAudio(new NAudio(), file.Item2);
                 else
                 {
                     Bassoon bassoon = new Bassoon();
-                    using (bassoon.Engine)
+                    using(bassoon.Engine)
                         PlayWithBassoon(bassoon, file.Item2);
                 }
                 Console.ResetColor();
@@ -93,18 +96,44 @@ namespace Majora.Terminal
             }
         }
 
+        private static Tuple<string, string> GetTestDir(string path)
+        {
+            string extension;
+            while (true)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                extension = Console.ReadLine();
+                if(AudioLibrary.CheckCommand(extension) != 2)
+                {
+                    if(testFiles.ContainsKey(extension))
+                        break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("There's not test file with that extension.");
+                }
+            }
+            Console.ResetColor();
+            return new Tuple<string, string>
+            (
+                extension,
+                Path.Join(path, testFiles[extension])
+            );
+        }
+
         private static Tuple<string, string> GetFile()
         {
             string extension;
             while(true)
             {
-
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 extension = Console.ReadLine();
-                if(testFiles.ContainsKey(extension))
-                    break;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("There's not test file with that extension.");
+                if (AudioLibrary.CheckCommand(extension) != 2)
+                {
+                    if (testFiles.ContainsKey(extension))
+                        break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("There's not test file with that extension.");
+                }
             }
             Console.ResetColor();
             return new Tuple<string, string>

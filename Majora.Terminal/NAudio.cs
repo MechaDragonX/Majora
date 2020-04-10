@@ -44,33 +44,42 @@ namespace Majora.Terminal
         {
             WaveOutEvent output = (WaveOutEvent)audio;
             string input;
-            while(true)
+            while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 input = Console.ReadLine();
+                int validCommand = -1;
                 if(output.PlaybackState == PlaybackState.Playing)
                 {
-                    if(input.ToLower() == ControlType.pause.ToString())
-                        output.Pause();
-                    else if (input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
-                    {
-                        Dispose(output);
-                        break;
-                    }
-                    else
+                    validCommand = CheckCommand(input);
+                    if(validCommand == 0)
                         CommandError();
+                    else if(validCommand != 2)
+                    {
+                        if(input.ToLower() == ControlType.pause.ToString())
+                            output.Pause();
+                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        {
+                            Dispose(output);
+                            break;
+                        }
+                    }
                 }
                 else
                 {
-                    if (input.ToLower() == ControlType.play.ToString())
-                        output.Play();
-                    else if (input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
-                    {
-                        Dispose(output);
-                        break;
-                    }
-                    else
+                    validCommand = CheckCommand(input);
+                    if(validCommand == 0)
                         CommandError();
+                    else if(validCommand != 2)
+                    {
+                        if(input.ToLower() == ControlType.play.ToString())
+                            output.Play();
+                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        {
+                            Dispose(output);
+                            break;
+                        }
+                    }
                 }
             }
         }

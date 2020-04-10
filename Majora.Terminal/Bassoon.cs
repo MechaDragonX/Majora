@@ -44,29 +44,38 @@ namespace Majora.Terminal
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 input = Console.ReadLine();
+                int validCommand = -1;
                 if(sound.IsPlaying)
                 {
-                    if(input.ToLower() == ControlType.pause.ToString())
-                        sound.Pause();
-                    else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
-                    {
-                        Dispose(sound);
-                        break;
-                    }
-                    else
+                    validCommand = CheckCommand(input);
+                    if(validCommand == 0)
                         CommandError();
+                    else if(validCommand != 2)
+                    {
+                        if(input.ToLower() == ControlType.pause.ToString())
+                            sound.Pause();
+                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        {
+                            Dispose(sound);
+                            break;
+                        }
+                    }
                 }
                 else
                 {
-                    if(input.ToLower() == ControlType.play.ToString())
-                        sound.Play();
-                    else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
-                    {
-                        Dispose(sound);
-                        break;
-                    }
-                    else
+                    validCommand = CheckCommand(input);
+                    if(validCommand == 0)
                         CommandError();
+                    else if(validCommand != 2)
+                    {
+                        if(input.ToLower() == ControlType.play.ToString())
+                            sound.Play();
+                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        {
+                            Dispose(sound);
+                            break;
+                        }
+                    }
                 }
             }
         }
