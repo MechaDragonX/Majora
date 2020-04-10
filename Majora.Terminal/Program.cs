@@ -19,69 +19,70 @@ namespace Majora.Terminal
         {
             Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
 
-            bool running = true;
-            BassoonEngine bassoon = new BassoonEngine();
-            while(true)
+            using(new BassoonEngine())
             {
-                string path = getFile();
-                Sound sound;
-
-                try { sound = new Sound(path); }
-                catch(Exception e)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"ERROR: { e.Message }");
-                    Console.ResetColor();
-                    return;
-                }
-
-                sound.Volume = 0.2f;
-                sound.Play();
-                Console.WriteLine($"Playing \"{ sound.Artist } - { sound.Title }\" from \"{ sound.Album }\" at 20% volume.");
-
-                string input;
                 while(true)
                 {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    input = Console.ReadLine();
-                    if(sound.IsPlaying)
-                    {
-                        if(input.ToLower() == "pause")
-                            sound.Pause();
-                        else if(input.ToLower() == "stop" || input.ToLower() == "")
-                        {
-                            sound.Dispose();
-                            break;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("That command is not supported or is misspelled!\n");
-                        }
-                    }
-                    else
-                    {
-                        if(input.ToLower() == "play")
-                            sound.Play();
-                        else if(input.ToLower() == "stop" || input.ToLower() == "")
-                        {
-                            sound.Dispose();
-                            break;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("That command is not supported or is misspelled!\n");
-                        }
-                    }
-                }
-                Console.ResetColor();
+                    string path = getFile();
+                    Sound sound;
 
-                Console.WriteLine("Do you wanna play another file? (y/n)");
-                input = Console.ReadLine();
-                if(input.ToLower() == "n" || input.ToLower() != "y")
-                    return;
-                Console.WriteLine("Write the name of the file extension you want to test!");
+                    try { sound = new Sound(path); }
+                    catch(Exception e)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"ERROR: { e.Message }");
+                        Console.ResetColor();
+                        return;
+                    }
+
+                    sound.Volume = 0.2f;
+                    sound.Play();
+                    Console.WriteLine($"Playing \"{ sound.Artist } - { sound.Title }\" from \"{ sound.Album }\" at 20% volume.");
+
+                    string input;
+                    while(true)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        input = Console.ReadLine();
+                        if(sound.IsPlaying)
+                        {
+                            if(input.ToLower() == "pause")
+                                sound.Pause();
+                            else if(input.ToLower() == "stop" || input.ToLower() == "")
+                            {
+                                sound.Dispose();
+                                break;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("That command is not supported or is misspelled!\n");
+                            }
+                        }
+                        else
+                        {
+                            if(input.ToLower() == "play")
+                                sound.Play();
+                            else if(input.ToLower() == "stop" || input.ToLower() == "")
+                            {
+                                sound.Dispose();
+                                break;
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("That command is not supported or is misspelled!\n");
+                            }
+                        }
+                    }
+                    Console.ResetColor();
+
+                    Console.WriteLine("Do you wanna play another file? (y/n)");
+                    input = Console.ReadLine();
+                    if (input.ToLower() == "n" || input.ToLower() != "y")
+                        return;
+                    Console.WriteLine("Write the name of the file extension you want to test!");
+                }
             }
         }
 
@@ -98,6 +99,7 @@ namespace Majora.Terminal
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("There's not test file with that extension.");
             }
+            Console.ResetColor();
             return Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "Test", testFiles[extension]);
         }
     }
