@@ -1,5 +1,4 @@
-﻿using ATL;
-using Bassoon;
+﻿using Bassoon;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +14,7 @@ namespace Majora.Terminal
             Engine = new BassoonEngine();
         }
 
-        public Sound Load(string path)
+        public object Load(string path)
         {
             Sound sound;
             try { sound = new Sound(path); }
@@ -26,14 +25,20 @@ namespace Majora.Terminal
             }
             return sound;
         }
-        public void Play(Sound sound, string path)
+        public void Play(object audio, string path)
         {
+            Sound sound = (Sound)audio;
             sound.Play();
             NowPlaying(path);
         }
-        public void Dispose(Sound sound) { sound.Dispose(); }
-        public void CheckCommandInput(Sound sound)
+        public void Dispose(object audio)
         {
+            Sound sound = (Sound)audio;
+            sound.Dispose();
+        }
+        public void CheckCommandInput(object audio)
+        {
+            Sound sound = (Sound)audio;
             string input;
             while(true)
             {

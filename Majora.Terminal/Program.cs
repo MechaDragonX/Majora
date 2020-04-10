@@ -41,30 +41,7 @@ namespace Majora.Terminal
                     if(extensions[file.Item1] == "bassoon")
                         PlayWithBassoon(bassoon, file.Item2);
                     else if(extensions[file.Item1] == "naudio")
-                    {
-                        // playWithNAudio();
-                        AudioFileReader audioFile;
-                        WaveOutEvent outputDevice;
-                        try
-                        {
-                            audioFile = new AudioFileReader(file.Item2);
-                            outputDevice = new WaveOutEvent();
-                        }
-                        catch(Exception e)
-                        {
-                            LogError(e);
-                            return;
-                        }
-
-                        outputDevice.Init(audioFile);
-                        outputDevice.Play();
-                        if(outputDevice.PlaybackState == PlaybackState.Playing)
-                            NowPlaying(file.Item2);
-                        Console.WriteLine("Press any key to stop");
-                        Console.ReadKey();
-                        audioFile.Dispose();
-                        outputDevice.Dispose();
-                    }
+                        PlayWithNAudio(new NAudio(), file.Item2);
                     Console.ResetColor();
 
                     string input;
@@ -127,9 +104,15 @@ namespace Majora.Terminal
         }
         private static void PlayWithBassoon(Bassoon bassoon, string path)
         {
-            Sound sound = bassoon.Load(path);
+            var sound = bassoon.Load(path);
             bassoon.Play(sound, path);
             bassoon.CheckCommandInput(sound);
+        }
+        private static void PlayWithNAudio(NAudio nAudio, string path)
+        {
+            var output = nAudio.Load(path);
+            nAudio.Play(output, path);
+            nAudio.CheckCommandInput(output);
         }
     }
 }

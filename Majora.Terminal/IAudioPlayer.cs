@@ -5,9 +5,9 @@ namespace Majora.Terminal
 {
     interface IAudioPlayer
     {
-        public Sound Load(string path);
-        public void Play(Sound sound, string path);
-        public void Dispose(Sound sound);
-        public void CheckCommandInput(Sound sound);
+        public object Load(string path);
+        public void Play(object audio, string path);
+        public void Dispose(object audio);
+        public void CheckCommandInput(object audio);
     }
 }
