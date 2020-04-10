@@ -31,14 +31,15 @@ namespace Majora.Terminal
         {
             Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
 
-            using(new BassoonEngine())
+            Bassoon bassoon = new Bassoon();
+            using(bassoon.Engine)
             {
                 while(true)
                 {
                     Tuple<string, string> file = GetFile();
 
                     if(extensions[file.Item1] == "bassoon")
-                        PlayWithBassoon(file.Item2);
+                        PlayWithBassoon(bassoon, file.Item2);
                     else if(extensions[file.Item1] == "naudio")
                     {
                         // playWithNAudio();
@@ -93,12 +94,6 @@ namespace Majora.Terminal
             }
         }
 
-        private static void LogError(Exception e)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"ERROR: { e.Message }");
-            Console.ResetColor();
-        }
         private static Tuple<string, string> GetFile()
         {
             string extension;
@@ -119,60 +114,22 @@ namespace Majora.Terminal
                 Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "Test", testFiles[extension])
             );
         }
+        private static void LogError(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"ERROR: { e.Message }");
+            Console.ResetColor();
+        }
         private static void NowPlaying(string path)
         {
             Track track = new Track(path);
             Console.WriteLine($"Now Playing \"{ track.Artist } - { track.Title }\" from \"{ track.Album }\"");
         }
-        private static void PlayWithBassoon(string path)
+        private static void PlayWithBassoon(Bassoon bassoon, string path)
         {
-            Sound sound;
-            try { sound = new Sound(path); }
-            catch(Exception e)
-            {
-                LogError(e);
-                return;
-            }
-
-            sound.Play();
-            NowPlaying(path);
-
-            string input;
-            while(true)
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                input = Console.ReadLine();
-                if(sound.IsPlaying)
-                {
-                    if(input.ToLower() == "pause")
-                        sound.Pause();
-                    else if(input.ToLower() == "stop" || input.ToLower() == "")
-                    {
-                        sound.Dispose();
-                        break;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("That command is not supported or is misspelled!\n");
-                    }
-                }
-                else
-                {
-                    if(input.ToLower() == "play")
-                        sound.Play();
-                    else if(input.ToLower() == "stop" || input.ToLower() == "")
-                    {
-                        sound.Dispose();
-                        break;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("That command is not supported or is misspelled!\n");
-                    }
-                }
-            }
+            Sound sound = bassoon.Load(path);
+            bassoon.Play(sound, path);
+            bassoon.CheckCommandInput(sound);
         }
     }
 }
