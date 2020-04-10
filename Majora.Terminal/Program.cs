@@ -1,7 +1,11 @@
-﻿using System;
+﻿using ATL;
+using ATL.AudioData;
+using Bassoon;
+using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Bassoon;
+using System.Threading;
 
 namespace Majora.Terminal
 {
@@ -9,15 +13,17 @@ namespace Majora.Terminal
     {
         private static readonly Dictionary<string, string> testFiles = new Dictionary<string, string>()
         {
-            {  "wav", "hydro_city_2-mania.wav" },
-            {  "mp3", "mm2_wily1-fc.mp3" },
-            {  "m4a", "gerudo_valley.m4a" },
-            {  "flac", "tank.flac" },
+            { "wav", "hydro_city_2-mania.wav" },
+            { "mp3", "mm2_wily1-fc.mp3" },
+            { "m4a", "gerudo_valley.m4a" },
+            { "flac", "tank.flac" },
+            { "ogg", "cruel_angel's_thesis.ogg" }
         };
         private static readonly Dictionary<string, string> extensions = new Dictionary<string, string>()
         {
             { "wav", "bassoon" },
             { "flac", "bassoon" },
+            { "ogg", "bassoon" },
             { "mp3", "naudio" },
             { "aac", "naudio" },
             { "m4a", "naudio" }
@@ -31,12 +37,24 @@ namespace Majora.Terminal
             {
                 while(true)
                 {
-                    Tuple<string, string> file = getFile();
+                    Tuple<string, string> file = GetFile();
 
                     if(extensions[file.Item1] == "bassoon")
-                        playWithBassoon(file.Item2);
-                    //else if(extensions[file.Item1] == "naudio")
-                    //    playWithNAudio();
+                        PlayWithBassoon(file.Item2);
+                    else if(extensions[file.Item1] == "naudio")
+                    {
+                        // playWithNAudio();
+                        AudioFileReader audioFile = new AudioFileReader(file.Item2);
+                        WaveOutEvent outputDevice = new WaveOutEvent();
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
+                        if (outputDevice.PlaybackState == PlaybackState.Playing)
+                            NowPlaying(file.Item2);
+                        Console.WriteLine("Press any key to stop");
+                        Console.ReadKey();
+                        audioFile.Dispose();
+                        outputDevice.Dispose();
+                    }
                     Console.ResetColor();
 
                     string input;
@@ -66,7 +84,7 @@ namespace Majora.Terminal
             }
         }
 
-        private static Tuple<string, string> getFile()
+        private static Tuple<string, string> GetFile()
         {
             string extension;
             while(true)
@@ -86,7 +104,12 @@ namespace Majora.Terminal
                 Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "Test", testFiles[extension])
             );
         }
-        private static void playWithBassoon(string path)
+        private static void NowPlaying(string path)
+        {
+            Track track = new Track(path);
+            Console.WriteLine($"Now Playing \"{ track.Artist } - { track.Title }\" from \"{ track.Album }\"");
+        }
+        private static void PlayWithBassoon(string path)
         {
             Sound sound;
             try { sound = new Sound(path); }
@@ -98,9 +121,8 @@ namespace Majora.Terminal
                 return;
             }
 
-            sound.Volume = 0.2f;
             sound.Play();
-            Console.WriteLine($"Playing \"{ sound.Artist } - { sound.Title }\" from \"{ sound.Album }\" at 20% volume.");
+            NowPlaying(path);
 
             string input;
             while(true)

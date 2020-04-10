@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="Bassoon" Version="1.1.1" />
+    <PackageReference Include="NAudio" Version="1.10.0" />
+    <PackageReference Include="NAudio.Lame" Version="1.1.1" />
+    <PackageReference Include="z440.atl.core" Version="3.3.0" />
   </ItemGroup>
 
 </Project>
