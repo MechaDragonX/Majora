@@ -22,16 +22,14 @@ namespace Majora.Terminal
             bool isDir = false;
             while(true)
             {
-                Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
-                Console.WriteLine("Please write the path to your file!");
+                Console.WriteLine("--- Majora Terminal ---\n\nPlease write the path to your file!");
 
-                while(!isDir)
+                while(true)
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     path = Console.ReadLine();
                     if(File.Exists(path))
                     {
-                        isDir = true;
                         Console.ResetColor();
                         break;
                     }
