@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -7,46 +6,24 @@ namespace Majora.Terminal
 {
     class Program
     {
-        private static readonly List<string> nAudioExtensions = new List<string>()
-        {
-            "mp3",
-            "aac",
-            "m4a"
-        };
-
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            Console.WriteLine("--- Majora Terminal ---\n\n");
             string path = "";
             while(true)
             {
-                Console.WriteLine("--- Majora Terminal ---\n\nPlease write the path to your file!");
+                Console.WriteLine("Please write the path to your file!");
+                path = ValidateFile();
 
-                while(true)
-                {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    path = Console.ReadLine();
-                    if(File.Exists(path))
-                    {
-                        Console.ResetColor();
-                        break;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"ERROR: The file doesn't exist! Did you misspell the path?");
-                        Console.ResetColor();
-                    }
-                }
-
-                if(nAudioExtensions.Contains(Path.GetExtension(path)[1..]))
-                    PlayWithNAudio(new NAudio(), path);
+                if(AudioLibrary.nAudioExtensions.Contains(Path.GetExtension(path)[1..]))
+                    NAudioStart(new NAudio(), path);
                 else
                 {
                     Bassoon bassoon = new Bassoon();
-                    using (bassoon.Engine)
-                        PlayWithBassoon(bassoon, path);
+                    using(bassoon.Engine)
+                        BassoonStart(bassoon, path);
                 }
                 Console.ResetColor();
                 if(!YesNo())
@@ -58,6 +35,28 @@ namespace Majora.Terminal
             }
         }
 
+        private static string ValidateFile()
+        {
+            string path;
+            while(true)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                path = Console.ReadLine();
+                if(File.Exists(path))
+                {
+                    Console.ResetColor();
+                    break;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"ERROR: The file doesn't exist! Did you misspell the path?");
+                    Console.ResetColor();
+                }
+            }
+
+            return path;
+        }
         public static bool YesNo()
         {
             string input;
@@ -69,11 +68,13 @@ namespace Majora.Terminal
                 if(input.ToLower() == "y" || input.ToLower() == "yes")
                 {
                     Console.ResetColor();
+                    Console.WriteLine();
                     return true;
                 }
                 else if(input.ToLower() == "n" || input.ToLower() == "no")
                 {
                     Console.ResetColor();
+                    Console.WriteLine();
                     return false;
                 }
                 else
@@ -83,17 +84,18 @@ namespace Majora.Terminal
                 }
             }
         }
-        private static void PlayWithBassoon(Bassoon bassoon, string path)
+        
+        private static void BassoonStart(Bassoon bassoon, string path)
         {
             var sound = bassoon.Load(path);
-            bassoon.Play(sound, path);
-            bassoon.CheckCommandInput(sound);
+            bassoon.Start(sound, path);
+            bassoon.Execute(sound);
         }
-        private static void PlayWithNAudio(NAudio nAudio, string path)
+        private static void NAudioStart(NAudio nAudio, string path)
         {
             var output = nAudio.Load(path);
-            nAudio.Play(output, path);
-            nAudio.CheckCommandInput(output);
+            nAudio.Start(output, path);
+            nAudio.Execute(output);
         }
     }
 }

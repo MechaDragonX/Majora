@@ -3,9 +3,12 @@
     interface IAudioLibrary
     {
         public object Load(string path);
-        public void Play(object audio, string path);
-        public void ChangeVolume(object audio, string input);
+        public void Start(object audio, string path);
         public void Dispose(object audio);
-        public void CheckCommandInput(object audio);
+
+        public bool IsPlaying(object audio);
+        public void Play(object audio);
+        public void Pause(object audio);
+        public void ChangeVolume(object audio, string input);
     }
 }

@@ -8,6 +8,12 @@ namespace Majora.Terminal
 
     public abstract class AudioLibrary
     {
+        public static readonly List<string> nAudioExtensions = new List<string>()
+        {
+            "mp3",
+            "aac",
+            "m4a"
+        };
         public static readonly Dictionary<string, string> Commands = new Dictionary<string, string>()
         {
             { "help", "List the features of all the commands." },
@@ -15,7 +21,7 @@ namespace Majora.Terminal
             { "pause", "Pause the file. Only works when the file is playing." },
             { "volume", "Change the volume. Type \"volume <percent>\" to change the volume to that percentage. Percent symbol is not necessary." },
             { "mute", "Mute the volume." },
-            { "stop", "Stop using the current file. This also you to select a new file." },
+            { "stop", "Stop using the current file. This allows you to select a new file." },
         };
 
         public static void LogError(Exception e)
@@ -29,6 +35,7 @@ namespace Majora.Terminal
             Track track = new Track(path);
             Console.WriteLine($"Now Playing \"{ track.Artist } - { track.Title }\" from \"{ track.Album }\"");
         }
+
         public static int CheckCommand(string input)
         {
             string[] args = input.Split(' ');

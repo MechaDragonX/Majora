@@ -1,7 +1,5 @@
 ﻿using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Majora.Terminal
 {
@@ -26,12 +24,34 @@ namespace Majora.Terminal
             }
             return output;
         }
-        public void Play(object audio, string path)
+        public void Start(object audio, string path)
         {
             WaveOutEvent output = (WaveOutEvent)audio;
             output.Init(File);
             output.Play();
             NowPlaying(path);
+        }
+        public void Dispose(object audio)
+        {
+            File.Dispose();
+            WaveOutEvent output = (WaveOutEvent)audio;
+            output.Dispose();
+        }
+
+        public bool IsPlaying(object audio)
+        {
+            WaveOutEvent output = (WaveOutEvent)audio;
+            return output.PlaybackState == PlaybackState.Playing;
+        }
+        public void Play(object audio)
+        {
+            WaveOutEvent output = (WaveOutEvent)audio;
+            output.Play();
+        }
+        public void Pause(object audio)
+        {
+            WaveOutEvent output = (WaveOutEvent)audio;
+            output.Pause();
         }
         public void ChangeVolume(object audio, string input)
         {
@@ -47,37 +67,31 @@ namespace Majora.Terminal
                 Console.ResetColor();
             }
         }
-        public void Dispose(object audio)
+
+        public void Execute(object audio)
         {
-            File.Dispose();
-            WaveOutEvent output = (WaveOutEvent)audio;
-            output.Dispose();
-        }
-        public void CheckCommandInput(object audio)
-        {
-            WaveOutEvent output = (WaveOutEvent)audio;
             string input;
-            while(true)
+            while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 input = Console.ReadLine();
-                int validCommand = -1;
-                if(output.PlaybackState == PlaybackState.Playing)
+                int validCommand;
+                if (IsPlaying(audio))
                 {
                     validCommand = CheckCommand(input);
-                    if(validCommand == 0)
+                    if (validCommand == 0)
                         CommandError();
-                    else if(validCommand != 2)
+                    else if (validCommand != 2)
                     {
-                        if(input.ToLower() == ControlType.pause.ToString())
-                            output.Pause();
-                        else if(input.Split(' ')[0].ToLower() == ControlType.volume.ToString())
-                            ChangeVolume(output, input.Split(' ')[1]);
-                        else if(input.ToLower() == ControlType.mute.ToString())
-                            ChangeVolume(output, 0.ToString());
-                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        if (input.ToLower() == Terminal.Commands.pause.ToString())
+                            Pause(audio);
+                        else if (input.Split(' ')[0].ToLower() == Terminal.Commands.volume.ToString())
+                            ChangeVolume(audio, input.Split(' ')[1]);
+                        else if (input.ToLower() == Terminal.Commands.mute.ToString())
+                            ChangeVolume(audio, 0.ToString());
+                        else if (input.ToLower() == Terminal.Commands.stop.ToString() || input.ToLower() == "")
                         {
-                            Dispose(output);
+                            Dispose(audio);
                             break;
                         }
                     }
@@ -85,19 +99,19 @@ namespace Majora.Terminal
                 else
                 {
                     validCommand = CheckCommand(input);
-                    if(validCommand == 0)
+                    if (validCommand == 0)
                         CommandError();
-                    else if(validCommand != 2)
+                    else if (validCommand != 2)
                     {
-                        if(input.ToLower() == ControlType.play.ToString())
-                            output.Play();
-                        else if(input.Split(' ')[0].ToLower() == ControlType.volume.ToString())
-                            ChangeVolume(output, input.Split(' ')[1]);
-                        else if(input.ToLower() == ControlType.mute.ToString())
-                            ChangeVolume(output, 0.ToString());
-                        else if(input.ToLower() == ControlType.stop.ToString() || input.ToLower() == "")
+                        if (input.ToLower() == Terminal.Commands.play.ToString())
+                            Play(audio);
+                        else if (input.Split(' ')[0].ToLower() == Terminal.Commands.volume.ToString())
+                            ChangeVolume(audio, input.Split(' ')[1]);
+                        else if (input.ToLower() == Terminal.Commands.mute.ToString())
+                            ChangeVolume(audio, 0.ToString());
+                        else if (input.ToLower() == Terminal.Commands.stop.ToString() || input.ToLower() == "")
                         {
-                            Dispose(output);
+                            Dispose(audio);
                             break;
                         }
                     }

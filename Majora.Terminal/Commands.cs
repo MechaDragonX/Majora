@@ -1,6 +1,6 @@
 ﻿namespace Majora.Terminal
 {
-    public enum ControlType
+    public enum Commands
     {
         play,
         pause,
