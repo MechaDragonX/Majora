@@ -19,7 +19,6 @@ namespace Majora.Terminal
             Console.OutputEncoding = Encoding.UTF8;
 
             string path = "";
-            bool isDir = false;
             while(true)
             {
                 Console.WriteLine("--- Majora Terminal ---\n\nPlease write the path to your file!");
