@@ -59,15 +59,13 @@ namespace Majora.Terminal
                     }
                 }
 
-                Tuple<string, string> file = GetFile(path);
-
-                if (nAudioExtensions.Contains(file.Item1))
-                    PlayWithNAudio(new NAudio(), file.Item2);
+                if(nAudioExtensions.Contains(Path.GetExtension(path)))
+                    PlayWithNAudio(new NAudio(), path);
                 else
                 {
                     Bassoon bassoon = new Bassoon();
                     using (bassoon.Engine)
-                        PlayWithBassoon(bassoon, file.Item2);
+                        PlayWithBassoon(bassoon, path);
                 }
                 Console.ResetColor();
                 if(!AudioLibrary.YesNo())
@@ -78,22 +76,6 @@ namespace Majora.Terminal
             }
         }
 
-        private static Tuple<string, string> GetFile(string path)
-        {
-            if(!File.Exists(path))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERROR: File doesn't exist!");
-                Console.ResetColor();
-                return null;
-            }
-
-            return new Tuple<string, string>
-            (
-                Path.GetExtension(path)[1..],
-                path
-            );
-        }
         private static void PlayWithBassoon(Bassoon bassoon, string path)
         {
             var sound = bassoon.Load(path);
