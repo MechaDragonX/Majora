@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Chromely.Core;
 
-namespace Majora
+namespace Majora.Desktop
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // basic example of the application builder
+            AppBuilder
+            .Create()
+            .UseApp<Majora>()
+            .Build()
+            .Run(args);
         }
     }
 }

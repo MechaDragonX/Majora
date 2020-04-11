@@ -8,31 +8,42 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Majora.Terminal", "Majora.T
 		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E} = {D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MajoraLib", "MajoraLib\MajoraLib.csproj", "{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MajoraLib", "MajoraLib\MajoraLib.csproj", "{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Majora.Desktop", "Majora.Desktop\Majora.Desktop.csproj", "{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E} = {D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Majora.Desktop", "Majora.Desktop\Majora.Desktop.csproj", "{001804AE-55E1-4364-BD63-0191798D8997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Debug|x64.Build.0 = Debug|Any CPU
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|x64.ActiveCfg = Release|Any CPU
+		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|x64.Build.0 = Release|Any CPU
 		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|x64.Build.0 = Debug|Any CPU
 		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|x64.Build.0 = Release|Any CPU
+		{001804AE-55E1-4364-BD63-0191798D8997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001804AE-55E1-4364-BD63-0191798D8997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001804AE-55E1-4364-BD63-0191798D8997}.Debug|x64.ActiveCfg = Debug|x64
+		{001804AE-55E1-4364-BD63-0191798D8997}.Debug|x64.Build.0 = Debug|x64
+		{001804AE-55E1-4364-BD63-0191798D8997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001804AE-55E1-4364-BD63-0191798D8997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001804AE-55E1-4364-BD63-0191798D8997}.Release|x64.ActiveCfg = Release|x64
+		{001804AE-55E1-4364-BD63-0191798D8997}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
