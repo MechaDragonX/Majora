@@ -53,7 +53,18 @@ namespace Majora.Terminal
         public void ChangeVolume(object audio, string input)
         {
             Sound sound = (Sound)audio;
-            double percent = double.Parse(input.Trim('%'));
+            double percent;
+            try
+            {
+                percent = double.Parse(input.Trim('%'));
+            }
+            catch(Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"ERROR: You need to have a number after \"volume\"!");
+                Console.ResetColor();
+                return;
+            }
 
             if(percent >= 0 && percent <= 100)
                 sound.Volume = (float)(percent / 100);
