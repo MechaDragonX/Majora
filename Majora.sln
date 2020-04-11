@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Majora.Terminal", "Majora.Terminal\Majora.Terminal.csproj", "{FAA07D80-2E8C-4ACE-985F-B947276AC76C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Majora.Terminal", "Majora.Terminal\Majora.Terminal.csproj", "{FAA07D80-2E8C-4ACE-985F-B947276AC76C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E} = {D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MajoraLib", "MajoraLib\MajoraLib.csproj", "{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA07D80-2E8C-4ACE-985F-B947276AC76C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
