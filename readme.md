@@ -18,6 +18,8 @@ Majora is an audio player project. Right now all that's available is a terminal 
     - `*.aac` and `*.m4a`
 - [Audio Interchange File Format](https://en.wikipedia.org/wiki/Audio_Interchange_File_Format)
     - `*.aiff`
+- [AU/SND](https://en.wikipedia.org/wiki/Au_file_format)
+    - Usually encoded with the [μ-law algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)
 
 ## How do I run it?
 You can get the latest binaries from the [releases tab](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available.**
