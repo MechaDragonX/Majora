@@ -10,20 +10,6 @@ namespace Majora.Terminal
 {
     class Program
     {
-        private static readonly Dictionary<string, string> testFiles = new Dictionary<string, string>()
-        {
-            { "wav", "hydro_city_2-mania.wav" },
-            { "mp3", "mm2_wily1-fc.mp3" },
-            { "m4a", "gerudo_valley.m4a" },
-            { "flac", "tank.flac" },
-            { "ogg", "cruel_angel's_thesis.ogg" },
-            { "aiff", "yume_cinderella.aiff" },
-            { "opus", "sou.opus" }, // Not supported
-            { "w64", "fukashigi_no_carte.w64" },
-            { "wv", "gypsy_bard-ex.wv" }, // Not supported
-            { "mpc", "zenzenzense.mpc" }, // Not supported
-            { "au", "shinzou_wo_sasageyo.au" }
-        };
         private static readonly List<string> nAudioExtensions = new List<string>()
         {
             "mp3",
@@ -41,7 +27,7 @@ namespace Majora.Terminal
                 Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
                 Console.WriteLine("Please write the path to your file!");
 
-                while (!isDir)
+                while(!isDir)
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     path = Console.ReadLine();
@@ -68,7 +54,7 @@ namespace Majora.Terminal
                         PlayWithBassoon(bassoon, path);
                 }
                 Console.ResetColor();
-                if(!AudioLibrary.YesNo())
+                if(YesNo())
                 {
                     Console.WriteLine("Thanks for using Majora Terminal! Press any key to exit.");
                     Console.ReadKey();
@@ -76,6 +62,31 @@ namespace Majora.Terminal
             }
         }
 
+        public static bool YesNo()
+        {
+            string input;
+            Console.WriteLine("Do you wanna play another file? (y/n)");
+            while(true)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                input = Console.ReadLine();
+                if(input.ToLower() == "y" || input.ToLower() == "yes")
+                {
+                    Console.ResetColor();
+                    return true;
+                }
+                else if(input.ToLower() == "n" || input.ToLower() == "no")
+                {
+                    Console.ResetColor();
+                    return false;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Please type yes or no\n");
+                }
+            }
+        }
         private static void PlayWithBassoon(Bassoon bassoon, string path)
         {
             var sound = bassoon.Load(path);

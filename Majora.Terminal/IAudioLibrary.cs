@@ -3,7 +3,7 @@ using System;
 
 namespace Majora.Terminal
 {
-    interface IAudioPlayer
+    interface IAudioLibrary
     {
         public object Load(string path);
         public void Play(object audio, string path);

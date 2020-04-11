@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Majora.Terminal
 {
-    public class NAudio : AudioLibrary, IAudioPlayer
+    public class NAudio : AudioLibrary, IAudioLibrary
     {
         private AudioFileReader File;
 

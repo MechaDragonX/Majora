@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Majora.Terminal
 {
-    public class Bassoon : AudioLibrary, IAudioPlayer
+    public class Bassoon : AudioLibrary, IAudioLibrary
     {
         public BassoonEngine Engine { get; }
 
