@@ -1,5 +1,4 @@
-﻿using Bassoon;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +32,10 @@ namespace Majora.Terminal
             output.Init(File);
             output.Play();
             NowPlaying(path);
+        }
+        public void ChangeVolume(object audio, string input)
+        {
+            throw new NotImplementedException();
         }
         public void Dispose(object audio)
         {

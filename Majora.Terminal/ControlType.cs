@@ -4,6 +4,8 @@
     {
         play,
         pause,
+        volume,
+        mute,
         stop
     }
 }

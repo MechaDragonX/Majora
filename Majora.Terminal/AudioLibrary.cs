@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Majora.Terminal
 {
@@ -14,6 +13,8 @@ namespace Majora.Terminal
             { "help", "List the features of all the commands." },
             { "play", "Play the file. Only works when paused." },
             { "pause", "Pause the file. Only works when the file is playing." },
+            { "volume", "Change the volume. Type \"volume <percent>\" to change the volume to that percentage. Percent symbol is not necessary." },
+            { "mute", "Mute the volume." },
             { "stop", "Stop using the current file. This also you to select a new file." },
         };
 

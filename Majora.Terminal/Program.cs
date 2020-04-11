@@ -1,7 +1,4 @@
-﻿using ATL;
-using Bassoon;
-using NAudio.Wave;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -16,6 +13,7 @@ namespace Majora.Terminal
             "aac",
             "m4a"
         };
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -54,10 +52,11 @@ namespace Majora.Terminal
                         PlayWithBassoon(bassoon, path);
                 }
                 Console.ResetColor();
-                if(YesNo())
+                if(!YesNo())
                 {
                     Console.WriteLine("Thanks for using Majora Terminal! Press any key to exit.");
                     Console.ReadKey();
+                    return;
                 }
             }
         }
