@@ -43,7 +43,7 @@ namespace Majora.Terminal
                     }
                 }
 
-                if(nAudioExtensions.Contains(Path.GetExtension(path)))
+                if(nAudioExtensions.Contains(Path.GetExtension(path)[1..]))
                     PlayWithNAudio(new NAudio(), path);
                 else
                 {
