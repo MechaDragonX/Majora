@@ -11,6 +11,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MajoraLib", "MajoraLib\MajoraLib.csproj", "{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Majora.Desktop", "Majora.Desktop\Majora.Desktop.csproj", "{76CCB155-DF9D-4503-B73F-26EB5CB5A34D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E} = {D89DC1B8-4927-41A8-9AA7-2B43BC8F2A3E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
