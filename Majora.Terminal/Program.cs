@@ -34,114 +34,50 @@ namespace Majora.Terminal
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            Console.WriteLine("Internal or Global Test?");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            string input;
+            string path = "";
+            bool isDir = false;
             while(true)
             {
-                input = Console.ReadLine();
-                if(input.ToLower() == "internal" || input.ToLower() == "i")
-                {
-                    Console.ResetColor();
-                    Console.WriteLine("What is the path to the test directory?");
-                    InternalTest(Console.ReadLine());
-                    break;
-                }
-                else if(input.ToLower() == "global" || input.ToLower() == "g")
-                {
-                    while(true)
-                    {
-                        Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
-                        Console.WriteLine("Please write the path to your file!");
-                        string path = Console.ReadLine();
-                        Tuple<string, string> file = GetFile(path);
+                Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
+                Console.WriteLine("Please write the path to your file!");
 
-                        if(nAudioExtensions.Contains(file.Item1))
-                            PlayWithNAudio(new NAudio(), file.Item2);
-                        else
-                        {
-                            Bassoon bassoon = new Bassoon();
-                            using(bassoon.Engine)
-                                PlayWithBassoon(bassoon, file.Item2);
-                        }
+                while (!isDir)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    path = Console.ReadLine();
+                    if(File.Exists(path))
+                    {
+                        isDir = true;
                         Console.ResetColor();
-                        if(!AudioLibrary.YesNo())
-                            return;
+                        break;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"ERROR: The file doesn't exist! Did you misspell the path?");
+                        Console.ResetColor();
                     }
                 }
-            }
-            Console.ReadKey();
-        }
 
-        private static void InternalTest(string path)
-        {
-            Console.WriteLine("--- Majora Terminal Test Program ---\n\nWrite the name of the file extension you want to test!");
+                Tuple<string, string> file = GetFile(path);
 
-            while(true)
-            {
-                Tuple<string, string> file = GetTestDir(path);
-
-                if(nAudioExtensions.Contains(file.Item1))
+                if (nAudioExtensions.Contains(file.Item1))
                     PlayWithNAudio(new NAudio(), file.Item2);
                 else
                 {
                     Bassoon bassoon = new Bassoon();
-                    using(bassoon.Engine)
+                    using (bassoon.Engine)
                         PlayWithBassoon(bassoon, file.Item2);
                 }
                 Console.ResetColor();
                 if(!AudioLibrary.YesNo())
-                    return;
-                Console.WriteLine("Write the name of the file extension you want to test!");
-            }
-        }
-
-        private static Tuple<string, string> GetTestDir(string path)
-        {
-            string extension;
-            while (true)
-            {
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                extension = Console.ReadLine();
-                if(AudioLibrary.CheckCommand(extension) != 2)
                 {
-                    if(testFiles.ContainsKey(extension))
-                        break;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There's not test file with that extension.");
+                    Console.WriteLine("Thanks for using Majora Terminal! Press any key to exit.");
+                    Console.ReadKey();
                 }
             }
-            Console.ResetColor();
-            return new Tuple<string, string>
-            (
-                extension,
-                Path.Join(path, testFiles[extension])
-            );
         }
 
-        private static Tuple<string, string> GetFile()
-        {
-            string extension;
-            while(true)
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                extension = Console.ReadLine();
-                if (AudioLibrary.CheckCommand(extension) != 2)
-                {
-                    if (testFiles.ContainsKey(extension))
-                        break;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There's not test file with that extension.");
-                }
-            }
-            Console.ResetColor();
-            return new Tuple<string, string>
-            (
-                extension,
-                Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName, "Test", testFiles[extension])
-            );
-        }
         private static Tuple<string, string> GetFile(string path)
         {
             if(!File.Exists(path))
@@ -157,17 +93,6 @@ namespace Majora.Terminal
                 Path.GetExtension(path)[1..],
                 path
             );
-        }
-        private static void LogError(Exception e)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"ERROR: { e.Message }");
-            Console.ResetColor();
-        }
-        private static void NowPlaying(string path)
-        {
-            Track track = new Track(path);
-            Console.WriteLine($"Now Playing \"{ track.Artist } - { track.Title }\" from \"{ track.Album }\"");
         }
         private static void PlayWithBassoon(Bassoon bassoon, string path)
         {
