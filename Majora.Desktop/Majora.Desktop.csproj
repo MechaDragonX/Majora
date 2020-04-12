@@ -9,17 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chromely" Version="5.0.77" />
+    <PackageReference Include="Chromely" Version="5.0.77.2" />
+    <PackageReference Include="Chromely.Core" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="App\play.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

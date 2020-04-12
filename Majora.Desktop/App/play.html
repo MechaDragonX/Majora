@@ -6,22 +6,30 @@
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css'
           integrity='sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm' crossorigin='anonymous' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>Majora</title>
     <script>
         $(document).ready(function () {
-            $('#play').click(function () {
-                console.log('clicked!');
+            var request = {
+                "method": "GET",
+                "url": "/play",
+                "parameters": null,
+                "postData": null
+            };
+            window.cefQuery({
+                request: JSON.stringify(request),
+                onSuccess: function (response) {
+                    console.log(response);
+                }, onFailure: function (err, msg) {
+                    console.log(err, msg);
+                }
             });
         });
     </script>
+    <title>Majora</title>
 </head>
 
 <body>
     <div class='jumbotron'>
-        <h2>Welcome to Majora, the cross-platform audio player written in C# for .NET Core!</h2>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="play.html" role="button" id="play">Play something!</a>
-        </p>
+        <h2>This page is empty</h2>
     </div>
 </body>
 
