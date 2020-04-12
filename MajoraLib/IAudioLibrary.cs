@@ -1,6 +1,6 @@
 ﻿namespace Majora.Terminal
 {
-    interface IAudioLibrary
+    public interface IAudioLibrary
     {
         public object Load(string path);
         public void Start(object audio, string path);

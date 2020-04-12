@@ -5,6 +5,7 @@ namespace Majora.Terminal
 {
     public class Bassoon : AudioLibrary, IAudioLibrary
     {
+        public readonly string library = "bassoon";
         public BassoonEngine Engine { get; }
 
         public Bassoon()
@@ -14,6 +15,7 @@ namespace Majora.Terminal
 
         public object Load(string path)
         {
+
             Sound sound;
             try { sound = new Sound(path); }
             catch(Exception e)

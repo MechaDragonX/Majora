@@ -15,16 +15,32 @@ namespace Majora.Terminal
             while(true)
             {
                 Console.WriteLine("Please write the path to your file!");
-                path = ValidateFile();
+                
+                AudioLibrary library;
+                while (true)
+                {
+                    path = ValidateFile();
+                    try
+                    {
+                        library = AudioLibrary.CheckFile(path);
+                        break;
 
-                if(AudioLibrary.nAudioExtensions.Contains(Path.GetExtension(path)[1..]))
-                    NAudioStart(new NAudio(), path);
+                    }
+                    catch (Exception e)
+                    {
+                        AudioLibrary.LogError(e);
+                    }
+                }
+
+                if(!AudioLibrary.supported[Path.GetExtension(path)[1..]])
+                    NAudioStart(library, path);
                 else
                 {
-                    Bassoon bassoon = new Bassoon();
-                    using(bassoon.Engine)
+                    Bassoon bassoon = (Bassoon)library;
+                    using (bassoon.Engine)
                         BassoonStart(bassoon, path);
                 }
+
                 Console.ResetColor();
                 if(!YesNo())
                 {
@@ -91,8 +107,9 @@ namespace Majora.Terminal
             bassoon.Start(sound, path);
             bassoon.Execute(sound);
         }
-        private static void NAudioStart(NAudio nAudio, string path)
+        private static void NAudioStart(AudioLibrary lib, string path)
         {
+            NAudio nAudio = (NAudio)lib;
             var output = nAudio.Load(path);
             nAudio.Start(output, path);
             nAudio.Execute(output);
