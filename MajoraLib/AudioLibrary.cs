@@ -36,7 +36,6 @@ namespace Majora.Terminal
             { "mute", "Mute the volume." },
             { "stop", "Stop using the current file. This allows you to select a new file." },
         };
-        public readonly string library = "";
 
         /// <summary>
         /// Check if the provided file type is supported and return the appropriate an instance audio library class.

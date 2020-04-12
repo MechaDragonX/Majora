@@ -5,8 +5,6 @@ namespace Majora.Terminal
 {
     public class NAudio : AudioLibrary, IAudioLibrary
     {
-        public readonly string library = "naudio";
-
         private AudioFileReader File;
 
         public NAudio() { }

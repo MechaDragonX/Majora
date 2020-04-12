@@ -5,7 +5,6 @@ namespace Majora.Terminal
 {
     public class Bassoon : AudioLibrary, IAudioLibrary
     {
-        public readonly string library = "bassoon";
         public BassoonEngine Engine { get; }
 
         public Bassoon()
