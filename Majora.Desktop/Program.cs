@@ -14,7 +14,6 @@ namespace Majora
             config.StartUrl = "local://App/index.html";
             config.WindowOptions.Title = "Majora";
             config.WindowOptions.RelativePathToIconFile = "local://Assets/majora.ico";
-            // config.UrlSchemes.Add(new UrlScheme("custom-2", "local", string.Empty, string.Empty, UrlSchemeType.Custom, false));
 #if DEBUG
             config.DebuggingMode = true;
 #elif RELEASE
