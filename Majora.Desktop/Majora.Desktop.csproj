@@ -1,25 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>Majora</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Majora</AssemblyName>
+    <RootNamespace>Majora</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Chromely" Version="5.0.77.2" />
-    <PackageReference Include="Chromely.Core" Version="5.0.0" />
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="App\play.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="Avalonia" Version="0.9.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.0" />
   </ItemGroup>
-
 </Project>
