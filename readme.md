@@ -4,6 +4,22 @@
 Majora is an audio player project. Right now all that's available is a terminal version, but I hope to have GUI versions avialable ***soon™***.
 
 ## What file types are supported right now?
+### GUI Desktop Application
+The GUI desktop application uses [LibVLC](https://wiki.videolan.org/LibVLC/) so it should support all audio formats supports VLC supports including:
+- [Waveform](https://en.wikipedia.org/wiki/WAV)
+    - Standard (`*.wav`, `*.wave`) and 64-bit (`*.w64`)
+- [Free Lossless Audio Codec](https://en.wikipedia.org/wiki/FLAC)
+    - `*.flac`
+- [Ogg Vorbis](https://en.wikipedia.org/wiki/Vorbis)
+    - `*.ogg`
+- [MPEG-1/MPEG-2 Audio Layer III ](https://en.wikipedia.org/wiki/MP3)
+    - MP3
+    - `*.mp3`
+- [Advanced Audio Coding](https://en.wikipedia.org/wiki/Advanced_Audio_Coding)
+    - Includes MPEG-4 and Apple containers
+    - `*.aac` and `*.m4a`
+### Terminal Program
+The terminal program still uses different libraries and I don't end to change it. It supports these formats:
 - [Waveform](https://en.wikipedia.org/wiki/WAV)
     - Standard (`*.wav`, `*.wave`) and 64-bit (`*.w64`)
 - [Free Lossless Audio Codec](https://en.wikipedia.org/wiki/FLAC)
@@ -22,13 +38,13 @@ Majora is an audio player project. Right now all that's available is a terminal 
     - Usually encoded with the [μ-law algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)
 
 ## How do I run it?
-You can get the latest binaries from the [releases tab](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available.**
+You can get the latest binaries from the [releases tab](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available for the terminal program.**
 
 ## Is it functional?
-At the moment it should be... Check the [issues](https://github.com/MechaDragonX/Bheithir/issues) tab for any issues.
+At the moment the terminal program should be but the desktop program is no where near that... Check the [issues](https://github.com/MechaDragonX/Bheithir/issues) tab for any issues.
 
 ## What the hell is this name?
 The name is a reference to the video game, [*The Legend of Zelda: Majora's Mask*](https://en.wikipedia.org/wiki/The_Legend_of_Zelda:_Majora%27s_Mask). In the game, you help various people in the main quests, each time getting a special song or instrument associated with that race (Goron, Zora, etc.). As such, the progression is tied to the music. The meaning and impact of the game is tied to this musical progression. There's no special association with this progression however. I just like the name and the reference.
 
 ## When will this be done?
-Well...the terminal version is functional, but I wanna make a GUI version...so let's say it's *in progress*.
+Well...the terminal version is functional, but I'm making a GUI version...so let's say it's *in progress*.
