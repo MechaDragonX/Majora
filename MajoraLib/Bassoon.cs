@@ -1,7 +1,7 @@
 ﻿using Bassoon;
 using System;
 
-namespace Majora.Terminal
+namespace MajoraLib
 {
     public class Bassoon : AudioLibrary, IAudioLibrary
     {

@@ -1,4 +1,4 @@
-﻿namespace Majora.Terminal
+﻿namespace MajoraLib
 {
     public enum Commands
     {

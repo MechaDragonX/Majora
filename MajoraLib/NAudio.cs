@@ -1,7 +1,7 @@
 ﻿using NAudio.Wave;
 using System;
 
-namespace Majora.Terminal
+namespace MajoraLib
 {
     public class NAudio : AudioLibrary, IAudioLibrary
     {
