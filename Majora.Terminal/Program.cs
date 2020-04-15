@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MajoraLib;
+using System;
 using System.IO;
 using System.Text;
 
@@ -36,8 +37,8 @@ namespace Majora.Terminal
                     NAudioStart(library, path);
                 else
                 {
-                    Bassoon bassoon = (Bassoon)library;
-                    using (bassoon.Engine)
+                    MajoraLib.Bassoon bassoon = (MajoraLib.Bassoon)library;
+                    using(bassoon.Engine)
                         BassoonStart(bassoon, path);
                 }
 
@@ -101,7 +102,7 @@ namespace Majora.Terminal
             }
         }
         
-        private static void BassoonStart(Bassoon bassoon, string path)
+        private static void BassoonStart(MajoraLib.Bassoon bassoon, string path)
         {
             var sound = bassoon.Load(path);
             bassoon.Start(sound, path);
@@ -109,7 +110,7 @@ namespace Majora.Terminal
         }
         private static void NAudioStart(AudioLibrary lib, string path)
         {
-            NAudio nAudio = (NAudio)lib;
+            MajoraLib.NAudio nAudio = (MajoraLib.NAudio)lib;
             var output = nAudio.Load(path);
             nAudio.Start(output, path);
             nAudio.Execute(output);

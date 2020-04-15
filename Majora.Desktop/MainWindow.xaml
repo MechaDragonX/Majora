@@ -5,5 +5,5 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Majora.MainWindow"
         Title="Majora">
-    Welcome to Avalonia!
+  <Button Name="clicker" Click="OnClickerClicked">Click me!</Button>
 </Window>

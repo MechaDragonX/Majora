@@ -27,7 +27,7 @@ namespace MajoraLib
         /// <summary>
         /// Defines the supported commands with help text. Key: Command Name, Value: Help Text
         /// </summary>
-        public static readonly Dictionary<string, string> Commands = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> CommandsHelp = new Dictionary<string, string>()
         {
             { "help", "List the features of all the commands." },
             { "play", "Play the file. Only works when paused." },
@@ -95,7 +95,7 @@ namespace MajoraLib
             }
             else
             {
-                if(Commands.ContainsKey(args[0]))
+                if(CommandsHelp.ContainsKey(args[0]))
                     return 1;
             }
             return 0;
@@ -107,7 +107,7 @@ namespace MajoraLib
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("All Commands:");
-            foreach(KeyValuePair<string, string> item in Commands)
+            foreach(KeyValuePair<string, string> item in CommandsHelp)
                 Console.WriteLine($"{ item.Key }: { item.Value }");
             Console.ResetColor();
         }
@@ -119,7 +119,7 @@ namespace MajoraLib
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Help info for \"{ command }\":");
-            Console.WriteLine($"{ command }: { Commands[command] }");
+            Console.WriteLine($"{ command }: { CommandsHelp[command] }");
             Console.ResetColor();
         }
         /// <summary>

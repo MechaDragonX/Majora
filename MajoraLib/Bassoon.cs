@@ -92,13 +92,13 @@ namespace MajoraLib
                         CommandError();
                     else if(validCommand != 2)
                     {
-                        if(input.ToLower() == Terminal.Commands.pause.ToString())
+                        if(input.ToLower() == Commands.pause.ToString())
                             Pause(audio);
-                        else if(input.Split(' ')[0].ToLower() == Terminal.Commands.volume.ToString())
+                        else if(input.Split(' ')[0].ToLower() == Commands.volume.ToString())
                             ChangeVolume(audio, input.Split(' ')[1]);
-                        else if(input.ToLower() == Terminal.Commands.mute.ToString())
+                        else if(input.ToLower() == Commands.mute.ToString())
                             ChangeVolume(audio, 0.ToString());
-                        else if(input.ToLower() == Terminal.Commands.stop.ToString() || input.ToLower() == "")
+                        else if(input.ToLower() == Commands.stop.ToString() || input.ToLower() == "")
                         {
                             Dispose(audio);
                             break;
@@ -112,13 +112,13 @@ namespace MajoraLib
                         CommandError();
                     else if (validCommand != 2)
                     {
-                        if (input.ToLower() == Terminal.Commands.play.ToString())
+                        if (input.ToLower() == Commands.play.ToString())
                             Play(audio);
-                        else if (input.Split(' ')[0].ToLower() == Terminal.Commands.volume.ToString())
+                        else if (input.Split(' ')[0].ToLower() == Commands.volume.ToString())
                             ChangeVolume(audio, input.Split(' ')[1]);
-                        else if (input.ToLower() == Terminal.Commands.mute.ToString())
+                        else if (input.ToLower() == Commands.mute.ToString())
                             ChangeVolume(audio, 0.ToString());
-                        else if (input.ToLower() == Terminal.Commands.stop.ToString() || input.ToLower() == "")
+                        else if (input.ToLower() == Commands.stop.ToString() || input.ToLower() == "")
                         {
                             Dispose(audio);
                             break;
