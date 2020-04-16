@@ -24,6 +24,7 @@
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="7" Margin="15">
         <Button Height="25" Name="playPauseButton"  Click="OnPlayPauseButtonClicked">Play</Button>
         <Button Height="25" Name="stopButton"  Click="OnStopButtonClicked">Stop</Button>
+        <Button Height="25" Name="muteButton"  Click="OnMuteButtonClicked">Mute</Button>
       </StackPanel>
     </StackPanel>
   </DockPanel>

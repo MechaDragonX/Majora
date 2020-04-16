@@ -13,7 +13,9 @@ namespace Majora.Playback
 
         protected string ResourcePath { get; set;  }
         public AudioMetadata CurrentAudioMetadata { get; set; }
-        public long Time { get; set; }
+        public int Volume { get; set; }
+        public bool Muted { get; set; }
+        // public long Time { get; set; }
 
         // Event Handlers
         public EventHandler<MediaPlayerTimeChangedEventArgs> OnTimeChanged;
@@ -32,6 +34,8 @@ namespace Majora.Playback
 
             ResourcePath = "";
             CurrentAudioMetadata = null;
+            Volume = 0;
+            Muted = false;
         }
 
         /// <summary>
@@ -55,6 +59,9 @@ namespace Majora.Playback
             VLCPlayer.Media = new Media(VLCLib, ResourcePath, fromType);
             VLCPlayer.Media.AddOption(":no-video");
 
+            Volume = 100;
+            Muted = false;
+
             //VLCPlayer.TimeChanged += TimeChanged;
             //VLCPlayer.PositionChanged += PositionChanged;
             //VLCPlayer.LengthChanged += LengthChanged;
@@ -70,6 +77,17 @@ namespace Majora.Playback
         public bool IsPlaying()
         {
             return VLCPlayer.IsPlaying;
+        }
+        public void ChangeVolume(int percentage)
+        {
+            if(!(percentage < 0 || percentage > 100))
+            {
+                VLCPlayer.Volume = percentage;
+                if(percentage == 0)
+                    Muted = true;
+                else
+                    Volume = percentage;
+            }
         }
         /// <summary>
         /// Play the currently loaded resource
@@ -95,10 +113,10 @@ namespace Majora.Playback
             VLCPlayer.Dispose();
         }
 
-        private long TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
-        {
-            Time = e.Time;
-            return Time;
-        }
+        //private long TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        //{
+        //    Time = e.Time;
+        //    return Time;
+        //}
     }
 }

@@ -18,9 +18,10 @@ namespace Majora.Views
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
-        private static TextBlock timeBlock;
+        // private static TextBlock timeBlock;
 
         private static Button playPauseButton;
+        private static Button muteButton;
 
         private void SetNowPlayingData()
         {
@@ -89,6 +90,22 @@ namespace Majora.Views
 
             playbackController.Stop();
         }
+        public void OnMuteButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(playbackController == null)
+                return;
+
+            if(!playbackController.Muted)
+            {
+                playbackController.ChangeVolume(0);
+                muteButton.Content = "Unmute";
+            }
+            else if (playbackController.Muted)
+            {
+                playbackController.ChangeVolume(playbackController.Volume);
+                muteButton.Content = "Mute";
+            }
+        }
 
         public NowPlayingView()
         {
@@ -102,9 +119,10 @@ namespace Majora.Views
             albumBlock = this.Find<TextBlock>("albumBlock");
             artistBlock = this.Find<TextBlock>("artistBlock");
             titleBlock = this.Find<TextBlock>("titleBlock");
-            timeBlock = this.Find<TextBlock>("timeBlock");
+            // timeBlock = this.Find<TextBlock>("timeBlock");
 
             playPauseButton = this.Find<Button>("playPauseButton");
+            muteButton = this.Find<Button>("muteButton");
         }
     }
 }
