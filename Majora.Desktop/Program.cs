@@ -2,8 +2,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Logging.Serilog;
+using Avalonia.ReactiveUI;
 
-namespace Majora.Desktop
+namespace Majora
 {
     class Program
     {
@@ -17,6 +18,7 @@ namespace Majora.Desktop
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToDebug();
+                .LogToDebug()
+                .UseReactiveUI();
     }
 }
