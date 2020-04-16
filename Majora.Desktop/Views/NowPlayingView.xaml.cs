@@ -19,9 +19,9 @@ namespace Majora.Views
             Extensions = new List<string>()
             {
                 "3gp", "a52", "a52b", "aac", "alac", "asf", "atrc", "atrc", "au",
-                "cook", "dnet", "dts", "flac", "mp3", "mpc", "mpga", "ogg", "opus",
-                "raac", "racp", "ralf", "sipr", "spex", "tac", "tta", "vorb", "wav",
-                "wma", "wma1", "wma2", "xa"
+                "cook", "dnet", "dts", "flac", "m4a", "mp3", "mpc", "mpga", "ogg",
+                "opus", "raac", "racp", "ralf", "sipr", "spex", "tac", "tta", "vorb",
+                "wav", "wma", "wma1", "wma2", "xa"
             }
         };
 
@@ -29,10 +29,25 @@ namespace Majora.Views
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
-        // private static TextBlock timeBlock;
-
         private static Button playPauseButton;
         private static Button muteButton;
+
+        public NowPlayingView()
+        {
+            this.InitializeComponent();
+        }
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+
+            cover = this.Find<Image>("cover");
+            albumBlock = this.Find<TextBlock>("albumBlock");
+            artistBlock = this.Find<TextBlock>("artistBlock");
+            titleBlock = this.Find<TextBlock>("titleBlock");
+
+            playPauseButton = this.Find<Button>("playPauseButton");
+            muteButton = this.Find<Button>("muteButton");
+        }
 
         private void SetNowPlayingData()
         {
@@ -50,7 +65,7 @@ namespace Majora.Views
         }
         private void Start(string path)
         {
-            if(playbackController != null)
+            if (playbackController != null)
                 playbackController.Dispose();
 
             playbackController = new PlaybackController();
@@ -63,15 +78,15 @@ namespace Majora.Views
         public async void OnFileImportButtonClicked(object sender, RoutedEventArgs e)
         {
             string path = await GetPath();
-            if(path != "")
+            if (path != "")
                 Start(path);
         }
         public void OnPlayPauseButtonClicked(object sender, RoutedEventArgs e)
         {
-            if(playbackController == null)
+            if (playbackController == null)
                 return;
 
-            if(playbackController.IsPlaying())
+            if (playbackController.IsPlaying())
             {
                 playbackController.Pause();
                 playPauseButton.Content = "Play";
@@ -84,44 +99,26 @@ namespace Majora.Views
         }
         public void OnStopButtonClicked(object sender, RoutedEventArgs e)
         {
-            if(playbackController == null)
+            if (playbackController == null)
                 return;
 
             playbackController.Stop();
         }
         public void OnMuteButtonClicked(object sender, RoutedEventArgs e)
         {
-            if(playbackController == null)
+            if (playbackController == null)
                 return;
 
-            if(!playbackController.Muted)
+            if (!playbackController.Muted)
             {
-                playbackController.ChangeVolume(0);
+                playbackController.ChangeVolume(0, true);
                 muteButton.Content = "Unmute";
             }
             else if (playbackController.Muted)
             {
-                playbackController.ChangeVolume(playbackController.Volume);
+                playbackController.ChangeVolume(playbackController.Volume, true);
                 muteButton.Content = "Mute";
             }
-        }
-
-        public NowPlayingView()
-        {
-            this.InitializeComponent();
-        }
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-
-            cover = this.Find<Image>("albumImage");
-            albumBlock = this.Find<TextBlock>("albumBlock");
-            artistBlock = this.Find<TextBlock>("artistBlock");
-            titleBlock = this.Find<TextBlock>("titleBlock");
-            // timeBlock = this.Find<TextBlock>("timeBlock");
-
-            playPauseButton = this.Find<Button>("playPauseButton");
-            muteButton = this.Find<Button>("muteButton");
         }
     }
 }
