@@ -1,7 +1,10 @@
 # Majora
 
 ## What is Majora?
-Majora is an audio player project. Right now all that's available is a terminal version, but I hope to have GUI versions avialable ***soon™***.
+Majora is an audio player project. There's a terminal version I made for testing and I'm working on a desktop GUI version using [Avalonia](https://github.com/AvaloniaUI/Avalonia), a cross-platform UI framework for .NET.
+
+## How do I run it?
+You can get the latest binaries from the [releases tab](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available for the terminal program.**
 
 ## What file types are supported right now?
 ### GUI Desktop Application
@@ -36,9 +39,6 @@ The terminal program still uses different libraries and I don't end to change it
     - `*.aiff`
 - [AU/SND](https://en.wikipedia.org/wiki/Au_file_format)
     - Usually encoded with the [μ-law algorithm](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)
-
-## How do I run it?
-You can get the latest binaries from the [releases tab](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available for the terminal program.**
 
 ## Is it functional?
 At the moment the terminal program should be but the desktop program is no where near that... Check the [issues](https://github.com/MechaDragonX/Bheithir/issues) tab for any issues.
