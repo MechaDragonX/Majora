@@ -12,8 +12,8 @@
   <DockPanel>
     <Button DockPanel.Dock="Bottom" Name="fileImportButton" Click="OnFileImportButtonClicked"  Margin="10">Open an Audio File</Button>
     <StackPanel Margin="10">
-      <StackPanel Orientation="Horizontal">
-        <Image Name="albumImage"></Image>
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <Image Name="albumImage" MaxWidth="1000" MaxHeight="100"></Image>
         <StackPanel Spacing="2">
           <TextBlock Name="albumBlock" FontFamily="Meiryo"></TextBlock>
           <TextBlock Name="artistBlock" FontFamily="Meiryo"></TextBlock>

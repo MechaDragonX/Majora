@@ -2,6 +2,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Majora.Playback;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,12 +14,14 @@ namespace Majora.Views
     {
         private static PlaybackController playbackController = null;
 
+        private static Image albumImage;
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
 
         private void SetNowPlayingData()
         {
+            albumImage.Source = playbackController.CurrentAudioMetadata.AlbumCover;
             albumBlock.Text = playbackController.CurrentAudioMetadata.Album;
             artistBlock.Text = playbackController.CurrentAudioMetadata.Artist;
             titleBlock.Text = playbackController.CurrentAudioMetadata.Title;
@@ -74,11 +78,11 @@ namespace Majora.Views
         {
             this.InitializeComponent();
         }
-
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
 
+            albumImage = this.Find<Image>("albumImage");
             albumBlock = this.Find<TextBlock>("albumBlock");
             artistBlock = this.Find<TextBlock>("artistBlock");
             titleBlock = this.Find<TextBlock>("titleBlock");
