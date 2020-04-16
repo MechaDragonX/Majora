@@ -13,8 +13,19 @@ namespace Majora.Views
     public class NowPlayingView : UserControl
     {
         private static PlaybackController playbackController = null;
+        private static readonly FileDialogFilter allFilesFilter = new FileDialogFilter()
+        {
+            Name = "All Supported Music Files",
+            Extensions = new List<string>()
+            {
+                "3gp", "a52", "a52b", "aac", "alac", "asf", "atrc", "atrc", "au",
+                "cook", "dnet", "dts", "flac", "mp3", "mpc", "mpga", "ogg", "opus",
+                "raac", "racp", "ralf", "sipr", "spex", "tac", "tta", "vorb", "wav",
+                "wma", "wma1", "wma2", "xa"
+            }
+        };
 
-        private static Image albumImage;
+        private static Image cover;
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
@@ -25,25 +36,13 @@ namespace Majora.Views
 
         private void SetNowPlayingData()
         {
-            albumImage.Source = playbackController.CurrentAudioMetadata.Cover;
+            cover.Source = playbackController.CurrentAudioMetadata.Cover;
             albumBlock.Text = playbackController.CurrentAudioMetadata.Album;
             artistBlock.Text = playbackController.CurrentAudioMetadata.Artist;
             titleBlock.Text = playbackController.CurrentAudioMetadata.Title;
         }
         private async Task<string> GetPath()
         {
-            FileDialogFilter allFilesFilter = new FileDialogFilter()
-            {
-                Name = "All Supported Music Files",
-                Extensions = new List<string>()
-                {
-                    "3gp", "a52", "a52b", "aac", "alac", "asf", "atrc", "atrc", "au",
-                    "cook", "dnet", "dts", "flac", "mp3", "mpc", "mpga", "ogg", "opus",
-                    "raac", "racp", "ralf", "sipr", "spex", "tac", "tta", "vorb", "wav",
-                    "wma", "wma1", "wma2", "xa"
-                }
-            };
-
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filters.Add(allFilesFilter);
             string[] result = await dialog.ShowAsync((Window)this.Parent);
@@ -115,7 +114,7 @@ namespace Majora.Views
         {
             AvaloniaXamlLoader.Load(this);
 
-            albumImage = this.Find<Image>("albumImage");
+            cover = this.Find<Image>("albumImage");
             albumBlock = this.Find<TextBlock>("albumBlock");
             artistBlock = this.Find<TextBlock>("artistBlock");
             titleBlock = this.Find<TextBlock>("titleBlock");
