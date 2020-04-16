@@ -25,6 +25,8 @@ namespace Majora.Views
             }
         };
 
+        private static MenuItem openButton;
+        private static MenuItem recentFileButton;
         private static Image cover;
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
@@ -39,6 +41,9 @@ namespace Majora.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+
+            openButton = this.Find<MenuItem>("openButton");
+            recentFileButton = this.Find<MenuItem>("recentFileButton");
 
             cover = this.Find<Image>("cover");
             albumBlock = this.Find<TextBlock>("albumBlock");
@@ -76,6 +81,12 @@ namespace Majora.Views
         }
 
         public async void OnFileImportButtonClicked(object sender, RoutedEventArgs e)
+        {
+            string path = await GetPath();
+            if (path != "")
+                Start(path);
+        }
+        public async void OnOpenButtonClicked(object sender, RoutedEventArgs e)
         {
             string path = await GetPath();
             if (path != "")
