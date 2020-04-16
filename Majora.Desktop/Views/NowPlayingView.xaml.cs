@@ -51,6 +51,10 @@ namespace Majora.Views
 		{
 			playbackController.Pause();
 		}
+		public void OnStopButtonClicked(object sender, RoutedEventArgs e)
+		{
+			playbackController.Stop();
+		}
 
 		public NowPlayingView()
         {

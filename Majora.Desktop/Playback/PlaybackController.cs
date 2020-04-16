@@ -62,5 +62,9 @@ namespace Majora.Playback
         {
             VLCPlayer.Pause();
         }
+        public void Stop()
+        {
+            VLCPlayer.Stop();
+        }
     }
 }

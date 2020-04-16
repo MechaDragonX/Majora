@@ -9,6 +9,7 @@
     <StackPanel>
       <Button Name="playButton"  Click="OnPlayButtonClicked">Play</Button>
       <Button Name="pauseButton"  Click="OnPauseButtonClicked">Pause</Button>
+      <Button Name="stopButton"  Click="OnStopButtonClicked">Stop</Button>
     </StackPanel>
   </DockPanel>
 </UserControl>
