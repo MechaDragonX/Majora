@@ -13,9 +13,10 @@ namespace Majora.Playback
 
         protected string ResourcePath { get; set;  }
         public AudioMetadata CurrentAudioMetadata { get; set; }
+        public long Time { get; set; }
 
         // Event Handlers
-        //private EventHandler<MediaPlayerTimeChangedEventArgs> TimeChanged;
+        public EventHandler<MediaPlayerTimeChangedEventArgs> OnTimeChanged;
         //private EventHandler<MediaPlayerPositionChangedEventArgs> PositionChanged;
         //private EventHandler<MediaPlayerLengthChangedEventArgs> LengthChanged;
         //private EventHandler<EventArgs> EndReached;
@@ -58,22 +59,43 @@ namespace Majora.Playback
             //VLCPlayer.Playing += Playing;
             //VLCPlayer.Paused += Paused;
         }
+
+        /// <summary>
+        /// Check if any media is playing currently
+        /// </summary>
+        /// <returns>True if any is playing, false if not</returns>
+        public bool IsPlaying()
+        {
+            return VLCPlayer.IsPlaying;
+        }
+        /// <summary>
+        /// Play the currently loaded resource
+        /// </summary>
         public void Play()
-        {
-            VLCPlayer.Play();
-        }
+            => VLCPlayer.Play();
+        /// <summary>
+        /// Pause the currently loaded resource
+        /// </summary>
         public void Pause()
-        {
-            VLCPlayer.Pause();
-        }
+            => VLCPlayer.Pause();
+        /// <summary>
+        /// Stop the currently loaded resource
+        /// </summary>
         public void Stop()
-        {
-            VLCPlayer.Stop();
-        }
+            => VLCPlayer.Stop();
+        /// <summary>
+        /// Dispose the currently used VLC Library and Media PLayer. Should be called when ever the file is changed.
+        /// </summary>
         public void Dispose()
         {
             VLCLib.Dispose();
             VLCPlayer.Dispose();
+        }
+
+        private long TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        {
+            Time = e.Time;
+            return Time;
         }
     }
 }

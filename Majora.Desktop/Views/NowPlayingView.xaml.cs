@@ -18,6 +18,9 @@ namespace Majora.Views
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
+        private static TextBlock timeBlock;
+
+        private static Button playPauseButton;
 
         private void SetNowPlayingData()
         {
@@ -54,6 +57,7 @@ namespace Majora.Views
             playbackController.Initialize(path);
             playbackController.Play();
             SetNowPlayingData();
+            playPauseButton.Content = "Pause";
         }
 
         public async void OnFileImportButtonClicked(object sender, RoutedEventArgs e)
@@ -61,16 +65,27 @@ namespace Majora.Views
             string path = await GetPath();
             Start(path);
         }
-        public void OnPlayButtonClicked(object sender, RoutedEventArgs e)
+        public void OnPlayPauseButtonClicked(object sender, RoutedEventArgs e)
         {
-            playbackController.Play();
-        }
-        public void OnPauseButtonClicked(object sender, RoutedEventArgs e)
-        {
-            playbackController.Pause();
+            if(playbackController == null)
+                return;
+
+            if(playbackController.IsPlaying())
+            {
+                playbackController.Pause();
+                playPauseButton.Content = "Play";
+            }
+            else
+            {
+                playbackController.Play();
+                playPauseButton.Content = "Pause";
+            }
         }
         public void OnStopButtonClicked(object sender, RoutedEventArgs e)
         {
+            if(playbackController == null)
+                return;
+
             playbackController.Stop();
         }
 
@@ -86,6 +101,9 @@ namespace Majora.Views
             albumBlock = this.Find<TextBlock>("albumBlock");
             artistBlock = this.Find<TextBlock>("artistBlock");
             titleBlock = this.Find<TextBlock>("titleBlock");
+            timeBlock = this.Find<TextBlock>("timeBlock");
+
+            playPauseButton = this.Find<Button>("playPauseButton");
         }
     }
 }
