@@ -40,6 +40,9 @@ namespace Majora.Playback
         /// <param name="path">Path to a audio resource. Can be from filesystem and web.</param>
         public void Initialize(string path)
         {
+            if(path == "")
+                return;
+
             ResourcePath = path;
             CurrentAudioMetadata = new AudioMetadata(ResourcePath);
 

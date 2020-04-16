@@ -24,7 +24,7 @@ namespace Majora.Views
 
         private void SetNowPlayingData()
         {
-            albumImage.Source = playbackController.CurrentAudioMetadata.AlbumCover;
+            albumImage.Source = playbackController.CurrentAudioMetadata.Cover;
             albumBlock.Text = playbackController.CurrentAudioMetadata.Album;
             artistBlock.Text = playbackController.CurrentAudioMetadata.Artist;
             titleBlock.Text = playbackController.CurrentAudioMetadata.Title;
@@ -36,7 +36,7 @@ namespace Majora.Views
                 Name = "All Supported Music Files",
                 Extensions = new List<string>()
                 {
-                    "wav", "wave", "w64",
+                    "wav", "wave",
                     "flac", "ogg",
                     "mp3", "aac", "m4a",
                     "aiff", "au", "snd"
@@ -63,7 +63,8 @@ namespace Majora.Views
         public async void OnFileImportButtonClicked(object sender, RoutedEventArgs e)
         {
             string path = await GetPath();
-            Start(path);
+            if(path != "")
+                Start(path);
         }
         public void OnPlayPauseButtonClicked(object sender, RoutedEventArgs e)
         {
