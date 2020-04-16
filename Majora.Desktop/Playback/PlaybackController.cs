@@ -1,6 +1,4 @@
-﻿using ATL;
-using ATL.AudioData;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,12 +6,13 @@ using System.Text;
 
 namespace Majora.Playback
 {
-    class PlaybackController
+    class PlaybackController : IDisposable
     {
         private LibVLC VLCLib;
         private MediaPlayer VLCPlayer;
 
-        public string ResourcePath { get; set;  }
+        protected string ResourcePath { get; set;  }
+        public AudioMetadata CurrentAudioMetadata { get; set; }
 
         // Event Handlers
         //private EventHandler<MediaPlayerTimeChangedEventArgs> TimeChanged;
@@ -26,8 +25,12 @@ namespace Majora.Playback
         public PlaybackController()
         {
             Core.Initialize();
+
             VLCLib = new LibVLC();
             VLCPlayer = new MediaPlayer(VLCLib);
+
+            ResourcePath = "";
+            CurrentAudioMetadata = null;
         }
 
         /// <summary>
@@ -37,6 +40,7 @@ namespace Majora.Playback
         public void Initialize(string path)
         {
             ResourcePath = path;
+            CurrentAudioMetadata = new AudioMetadata(ResourcePath);
 
             FromType fromType;
             if (File.Exists(ResourcePath))
@@ -65,6 +69,11 @@ namespace Majora.Playback
         public void Stop()
         {
             VLCPlayer.Stop();
+        }
+        public void Dispose()
+        {
+            VLCLib.Dispose();
+            VLCPlayer.Dispose();
         }
     }
 }
