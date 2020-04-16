@@ -82,12 +82,13 @@ namespace Majora.Playback
         /// Change the volume to the given percentage
         /// </summary>
         /// <param name="percentage">A integer between 0 and 100 (inclusive on both ends)</param>
-        public void ChangeVolume(int percentage)
+        /// <param name="muteButton">Was the mute button used to change the volume?</param>
+        public void ChangeVolume(int percentage, bool muteButton)
         {
             if(!(percentage < 0 || percentage > 100))
             {
                 VLCPlayer.Volume = percentage;
-                if(percentage == 0)
+                if(muteButton)
                     Muted = true;
                 else
                     Volume = percentage;
