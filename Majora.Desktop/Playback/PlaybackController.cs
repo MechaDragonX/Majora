@@ -78,6 +78,10 @@ namespace Majora.Playback
         {
             return VLCPlayer.IsPlaying;
         }
+        /// <summary>
+        /// Change the volume to the given percentage
+        /// </summary>
+        /// <param name="percentage">A integer between 0 and 100 (inclusive on both ends)</param>
         public void ChangeVolume(int percentage)
         {
             if(!(percentage < 0 || percentage > 100))
