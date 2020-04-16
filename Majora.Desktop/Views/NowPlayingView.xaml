@@ -8,9 +8,19 @@
              x:Class="Majora.Views.NowPlayingView"
              Height="400"
              Width="500">
-  
+    
   <DockPanel>
-    <Button DockPanel.Dock="Bottom" Name="fileImportButton" Click="OnFileImportButtonClicked"  Margin="10">Open an Audio File</Button>
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="File">
+        <MenuItem Header="Open..." />
+        <MenuItem Header="Recently Opened">
+          <MenuItem Header="file.wav" />
+        </MenuItem>
+      </MenuItem>
+    </Menu>
+    
+    <Button DockPanel.Dock="Bottom" Name="fileImportButton" Click="OnFileImportButtonClicked" Margin="10">Open an Audio File</Button>
+    
     <StackPanel Margin="10">
       <StackPanel Orientation="Horizontal" Spacing="10">
         <Image Name="cover" MaxWidth="1000" MaxHeight="100"></Image>
@@ -28,4 +38,5 @@
       </StackPanel>
     </StackPanel>
   </DockPanel>
+  
 </UserControl>
