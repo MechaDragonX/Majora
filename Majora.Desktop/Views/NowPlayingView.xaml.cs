@@ -37,10 +37,10 @@ namespace Majora.Views
                 Name = "All Supported Music Files",
                 Extensions = new List<string>()
                 {
-                    "wav", "wave",
-                    "flac", "ogg",
-                    "mp3", "aac", "m4a",
-                    "aiff", "au", "snd"
+                    "3gp", "a52", "a52b", "aac", "alac", "asf", "atrc", "atrc", "au",
+                    "cook", "dnet", "dts", "flac", "mp3", "mpc", "mpga", "ogg", "opus",
+                    "raac", "racp", "ralf", "sipr", "spex", "tac", "tta", "vorb", "wav",
+                    "wma", "wma1", "wma2", "xa"
                 }
             };
 
