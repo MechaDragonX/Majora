@@ -98,8 +98,12 @@ namespace Majora.ViewModels
         private static void SerializePlayedAudio()
         {
             JsonSerializer serializer = new JsonSerializer();
-            Directory.CreateDirectory(Path.Join(Environment.CurrentDirectory, "Data"));
-            using(StreamWriter sWriter = new StreamWriter(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")))
+            string dir = Path.Join(Environment.CurrentDirectory, "Data");
+            string file = Path.Join(dir, "recent.json");
+
+            if(!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+            using(StreamWriter sWriter = new StreamWriter(file))
             using(JsonWriter jWriter = new JsonTextWriter(sWriter))
                 serializer.Serialize(jWriter, PlayedAudio);
         }
