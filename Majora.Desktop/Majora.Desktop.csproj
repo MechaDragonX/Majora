@@ -16,9 +16,9 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.0" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.0" />
+    <PackageReference Include="Avalonia" Version="0.9.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.7" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.7" />
     <PackageReference Include="LibVLCSharp" Version="3.4.3" />
     <PackageReference Include="LibVLCSharp.GTK" Version="3.4.3" />
     <PackageReference Include="LibVLCSharp.WPF" Version="3.4.3" />
