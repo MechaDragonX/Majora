@@ -32,7 +32,7 @@
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="7" Margin="15">
         <Button Height="25" Name="playPauseButton"  Command="{ Binding PlayPause }" Content="{ Binding PlayPauseText }" />
         <Button Height="25" Name="stopButton" Command="{ Binding Stop }" Content="Stop" />
-        <Button Height="25" Name="muteButton" Click="OnMuteButtonClicked" Content="{ Binding MuteText }" />
+        <Button Height="25" Name="muteButton" Command="{ Binding Mute }" Content="{ Binding MuteText }" />
       </StackPanel>
     </StackPanel>
   </DockPanel>

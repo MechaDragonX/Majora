@@ -77,6 +77,7 @@ namespace Majora.ViewModels
             OpenFile = ReactiveCommand.Create(OpenFileCommand);
             PlayPause = ReactiveCommand.Create(PlayPauseCommand);
             Stop = ReactiveCommand.Create(StopCommand);
+            Mute = ReactiveCommand.Create(MuteCommand);
         }
 
         public ReactiveCommand<Unit, Unit> OpenFile { get; }
@@ -86,16 +87,16 @@ namespace Majora.ViewModels
             dialog.Filters.Add(allFilesFilter);
 
             string[] result = null;
-            if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if(Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 result = await dialog.ShowAsync(desktop.MainWindow);
-            else if (Application.Current.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
+            else if(Application.Current.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
                 result = await dialog.ShowAsync((Window)singleView.MainView.Parent);
 
             return result[0];
         }
         private void Start(string path)
         {
-            if (playbackController != null)
+            if(playbackController != null)
                 playbackController.Dispose();
 
             playbackController = new PlaybackController();
@@ -115,17 +116,17 @@ namespace Majora.ViewModels
         async void OpenFileCommand()
         {
             string path = await GetPath();
-            if (path != "")
+            if(path != "")
                 Start(path);
         }
 
         public ReactiveCommand<Unit, Unit> PlayPause { get; }
         void PlayPauseCommand()
         {
-            if (playbackController == null)
+            if(playbackController == null)
                 return;
 
-            if (playbackController.IsPlaying())
+            if(playbackController.IsPlaying())
             {
                 playbackController.Pause();
                 PlayPauseText = "Play";
@@ -140,10 +141,28 @@ namespace Majora.ViewModels
         public ReactiveCommand<Unit, Unit> Stop { get; set; }
         void StopCommand()
         {
-            if (playbackController == null)
+            if(playbackController == null)
                 return;
 
             playbackController.Stop();
+        }
+
+        public ReactiveCommand<Unit, Unit> Mute { get; set; }
+        void MuteCommand()
+        {
+            if(playbackController == null)
+                return;
+
+            if(!playbackController.Muted)
+            {
+                playbackController.ChangeVolume(0, true);
+                MuteText = "Unmute";
+            }
+            else if(playbackController.Muted)
+            {
+                playbackController.ChangeVolume(playbackController.Volume, true);
+                MuteText = "Mute";
+            }
         }
     }
 }
