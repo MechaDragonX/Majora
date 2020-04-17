@@ -15,7 +15,7 @@ namespace Majora.Playback
         public AudioMetadata CurrentAudioMetadata { get; set; }
         public int Volume { get; set; }
         public bool Muted { get; set; }
-        // public long Time { get; set; }
+        public long Time { get; set; }
 
         // Event Handlers
         public EventHandler<MediaPlayerTimeChangedEventArgs> OnTimeChanged;
@@ -62,12 +62,17 @@ namespace Majora.Playback
             Volume = 100;
             Muted = false;
 
-            //VLCPlayer.TimeChanged += TimeChanged;
+            VLCPlayer.TimeChanged += TimeChanged; 
             //VLCPlayer.PositionChanged += PositionChanged;
             //VLCPlayer.LengthChanged += LengthChanged;
             //VLCPlayer.EndReached += EndReached;
             //VLCPlayer.Playing += Playing;
             //VLCPlayer.Paused += Paused;
+        }
+
+        public void TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        {
+            Time = e.Time;
         }
 
         /// <summary>

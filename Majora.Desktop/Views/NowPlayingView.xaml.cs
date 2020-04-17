@@ -31,6 +31,7 @@ namespace Majora.Views
         private static TextBlock albumBlock;
         private static TextBlock artistBlock;
         private static TextBlock titleBlock;
+        private static TextBlock timeBlock;
         private static Button playPauseButton;
         private static Button muteButton;
 
@@ -49,6 +50,7 @@ namespace Majora.Views
             albumBlock = this.Find<TextBlock>("albumBlock");
             artistBlock = this.Find<TextBlock>("artistBlock");
             titleBlock = this.Find<TextBlock>("titleBlock");
+            timeBlock = this.Find<TextBlock>("timeBlock");
 
             playPauseButton = this.Find<Button>("playPauseButton");
             muteButton = this.Find<Button>("muteButton");
@@ -70,7 +72,7 @@ namespace Majora.Views
         }
         private void Start(string path)
         {
-            if (playbackController != null)
+            if(playbackController != null)
                 playbackController.Dispose();
 
             playbackController = new PlaybackController();
@@ -78,14 +80,9 @@ namespace Majora.Views
             playbackController.Play();
             SetNowPlayingData();
             playPauseButton.Content = "Pause";
+
         }
 
-        public async void OnFileImportButtonClicked(object sender, RoutedEventArgs e)
-        {
-            string path = await GetPath();
-            if (path != "")
-                Start(path);
-        }
         public async void OnOpenButtonClicked(object sender, RoutedEventArgs e)
         {
             string path = await GetPath();
