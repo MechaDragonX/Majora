@@ -6,13 +6,13 @@ namespace Majora.Playback
 {
     class AudioResource
     {
-        public string ResourcePath { get; set; }
+        public string Path { get; set; }
         public AudioMetadata Metadata { get; set; }
 
-        public AudioResource(string resourcePath)
+        public AudioResource(string path)
         {
-            ResourcePath = resourcePath;
-            Metadata = new AudioMetadata(resourcePath);
+            Path = path;
+            Metadata = new AudioMetadata(path);
         }
     }
 }

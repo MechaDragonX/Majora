@@ -26,7 +26,7 @@
           <TextBlock Name="albumBlock" FontFamily="Meiryo" Text="{ Binding Album }" />
           <TextBlock Name="artistBlock" FontFamily="Meiryo" Text="{ Binding Artist }" />
           <TextBlock Name="titleBlock" FontFamily="Meiryo" Text="{ Binding Title }" />
-          <TextBlock Name="timeBlock" FontFamily="Meiryo" Text="{ Binding Time }" />
+          <TextBlock Name="timeBlock" FontFamily="Meiryo" />
         </StackPanel>
       </StackPanel>
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="7" Margin="15">

@@ -15,8 +15,8 @@ namespace Majora.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private static PlaybackController playbackController = null;
-        private static readonly FileDialogFilter allFilesFilter = new FileDialogFilter()
+        private static PlaybackController PlaybackController = null;
+        private static readonly FileDialogFilter AllFilesFilter = new FileDialogFilter()
         {
             Name = "All Supported Music Files",
             Extensions = new List<string>()
@@ -27,6 +27,7 @@ namespace Majora.ViewModels
                 "wav", "wma", "wma1", "wma2", "xa"
             }
         };
+        private static Stack<AudioResource> PlayedAudio = new Stack<AudioResource>();
 
         private string playPauseText;
         public string PlayPauseText
@@ -64,6 +65,12 @@ namespace Majora.ViewModels
             get => title;
             set => this.RaiseAndSetIfChanged(ref title, value);
         }
+        //private string time;
+        //public string Time
+        //{
+        //    get => time;
+        //    set => this.RaiseAndSetIfChanged(ref time, value);
+        //}
 
         public MainWindowViewModel()
         {
@@ -84,7 +91,7 @@ namespace Majora.ViewModels
         private async Task<string> GetPath()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filters.Add(allFilesFilter);
+            dialog.Filters.Add(AllFilesFilter);
 
             string[] result = null;
             if(Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -96,22 +103,23 @@ namespace Majora.ViewModels
         }
         private void Start(string path)
         {
-            if(playbackController != null)
-                playbackController.Dispose();
+            if(PlaybackController != null)
+                PlaybackController.Dispose();
 
-            playbackController = new PlaybackController();
-            playbackController.Initialize(path);
-            playbackController.Play();
+            PlaybackController = new PlaybackController();
+            PlaybackController.Initialize(path);
+            PlayedAudio.Push(PlaybackController.Resource);
+
+            PlaybackController.Play();
             SetNowPlayingData();
             PlayPauseText = "Pause";
-
         }
         private void SetNowPlayingData()
         {
-            Cover = playbackController.CurrentAudioMetadata.Cover;
-            Album = playbackController.CurrentAudioMetadata.Album;
-            Artist = playbackController.CurrentAudioMetadata.Artist;
-            Title = playbackController.CurrentAudioMetadata.Title;
+            Cover = PlaybackController.Resource.Metadata.Cover;
+            Album = PlaybackController.Resource.Metadata.Album;
+            Artist = PlaybackController.Resource.Metadata.Artist;
+            Title = PlaybackController.Resource.Metadata.Title;
         }
         async void OpenFileCommand()
         {
@@ -123,17 +131,17 @@ namespace Majora.ViewModels
         public ReactiveCommand<Unit, Unit> PlayPause { get; }
         void PlayPauseCommand()
         {
-            if(playbackController == null)
+            if(PlaybackController == null)
                 return;
 
-            if(playbackController.IsPlaying())
+            if(PlaybackController.IsPlaying())
             {
-                playbackController.Pause();
+                PlaybackController.Pause();
                 PlayPauseText = "Play";
             }
             else
             {
-                playbackController.Play();
+                PlaybackController.Play();
                 PlayPauseText = "Pause";
             }
         }
@@ -141,26 +149,26 @@ namespace Majora.ViewModels
         public ReactiveCommand<Unit, Unit> Stop { get; set; }
         void StopCommand()
         {
-            if(playbackController == null)
+            if(PlaybackController == null)
                 return;
 
-            playbackController.Stop();
+            PlaybackController.Stop();
         }
 
         public ReactiveCommand<Unit, Unit> Mute { get; set; }
         void MuteCommand()
         {
-            if(playbackController == null)
+            if(PlaybackController == null)
                 return;
 
-            if(!playbackController.Muted)
+            if(!PlaybackController.Muted)
             {
-                playbackController.ChangeVolume(0, true);
+                PlaybackController.ChangeVolume(0, true);
                 MuteText = "Unmute";
             }
-            else if(playbackController.Muted)
+            else if(PlaybackController.Muted)
             {
-                playbackController.ChangeVolume(playbackController.Volume, true);
+                PlaybackController.ChangeVolume(PlaybackController.Volume, true);
                 MuteText = "Mute";
             }
         }

@@ -11,8 +11,7 @@ namespace Majora.Playback
         private LibVLC VLCLib;
         private MediaPlayer VLCPlayer;
 
-        protected string ResourcePath { get; set;  }
-        public AudioMetadata CurrentAudioMetadata { get; set; }
+        public AudioResource Resource { get; set; }
         public int Volume { get; set; }
         public bool Muted { get; set; }
         public long Time { get; set; }
@@ -31,11 +30,6 @@ namespace Majora.Playback
 
             VLCLib = new LibVLC();
             VLCPlayer = new MediaPlayer(VLCLib);
-
-            ResourcePath = "";
-            CurrentAudioMetadata = null;
-            Volume = 0;
-            Muted = false;
         }
 
         /// <summary>
@@ -47,16 +41,15 @@ namespace Majora.Playback
             if(path == "")
                 return;
 
-            ResourcePath = path;
-            CurrentAudioMetadata = new AudioMetadata(ResourcePath);
+            Resource = new AudioResource(path);
 
             FromType fromType;
-            if (File.Exists(ResourcePath))
+            if (File.Exists(path))
                 fromType = FromType.FromPath;
             else
                 fromType = FromType.FromLocation;
 
-            VLCPlayer.Media = new Media(VLCLib, ResourcePath, fromType);
+            VLCPlayer.Media = new Media(VLCLib, path, fromType);
             VLCPlayer.Media.AddOption(":no-video");
 
             Volume = 100;

@@ -12,9 +12,6 @@ namespace Majora.Views
 {
     public class NowPlayingView : UserControl
     {
-        private static MenuItem recentFileButton;
-        private static TextBlock timeBlock;
-
         public NowPlayingView()
         {
             this.InitializeComponent();
@@ -22,10 +19,6 @@ namespace Majora.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-
-            recentFileButton = this.Find<MenuItem>("recentFileButton");
-
-            timeBlock = this.Find<TextBlock>("timeBlock");
         }
     }
 }
