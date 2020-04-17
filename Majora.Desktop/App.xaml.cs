@@ -16,9 +16,19 @@ namespace Majora
         public override void OnFrameworkInitializationCompleted()
         {
             if(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-                desktop.MainWindow = new MainWindow();
+            {
+                desktop.MainWindow = new MainWindow()
+                {
+                    DataContext = new MainWindowViewModel()
+                };
+            }
             else if(ApplicationLifetime is ISingleViewApplicationLifetime singleView)
-                singleView.MainView = new MainWindow();
+            {
+                singleView.MainView = new MainWindow()
+                {
+                    DataContext = new MainWindowViewModel()
+                };
+            }
 
             base.OnFrameworkInitializationCompleted();
         }
