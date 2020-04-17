@@ -4,9 +4,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using Majora.Playback;
 using Majora.Views;
+using Newtonsoft.Json;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +29,7 @@ namespace Majora.ViewModels
                 "wav", "wma", "wma1", "wma2", "xa"
             }
         };
-        private static Stack<AudioResource> PlayedAudio = new Stack<AudioResource>();
+        private static Stack<string> PlayedAudio = new Stack<string>();
 
         private string playPauseText;
         public string PlayPauseText
@@ -85,6 +87,33 @@ namespace Majora.ViewModels
             PlayPause = ReactiveCommand.Create(PlayPauseCommand);
             Stop = ReactiveCommand.Create(StopCommand);
             Mute = ReactiveCommand.Create(MuteCommand);
+
+            if(Path.IsPathFullyQualified(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")))
+                PlayedAudio = DeserializePlayedAudio();
+        }
+        private static void SerializePlayedAudio()
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            Directory.CreateDirectory(Path.Join(Environment.CurrentDirectory, "Data"));
+            using(StreamWriter sWriter = new StreamWriter(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")))
+            using(JsonWriter jWriter = new JsonTextWriter(sWriter))
+                serializer.Serialize(jWriter, PlayedAudio);
+        }
+        private static Stack<string> DeserializePlayedAudio()
+        {
+            return JsonConvert.DeserializeObject<Stack<string>>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")));
+        }
+        private static string[] GetRecentlyPlayed(ref Stack<string> stack)
+        {
+            Stack<string> newStack = new Stack<string>();
+            int count = stack.Count;
+            string item;
+            for (int i = 0; i < count; i++)
+            {
+                item = stack.Pop();
+                newStack.Push(item);
+            }
+            return newStack.ToArray();
         }
 
         public ReactiveCommand<Unit, Unit> OpenFile { get; }
@@ -103,12 +132,13 @@ namespace Majora.ViewModels
         }
         private void Start(string path)
         {
-            if(PlaybackController != null)
+            if (PlaybackController != null)
                 PlaybackController.Dispose();
 
             PlaybackController = new PlaybackController();
             PlaybackController.Initialize(path);
-            PlayedAudio.Push(PlaybackController.Resource);
+            PlayedAudio.Push(PlaybackController.Resource.Path);
+            SerializePlayedAudio();
 
             PlaybackController.Play();
             SetNowPlayingData();
