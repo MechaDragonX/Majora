@@ -76,6 +76,7 @@ namespace Majora.ViewModels
 
             OpenFile = ReactiveCommand.Create(OpenFileCommand);
             PlayPause = ReactiveCommand.Create(PlayPauseCommand);
+            Stop = ReactiveCommand.Create(StopCommand);
         }
 
         public ReactiveCommand<Unit, Unit> OpenFile { get; }
@@ -134,6 +135,15 @@ namespace Majora.ViewModels
                 playbackController.Play();
                 PlayPauseText = "Pause";
             }
+        }
+
+        public ReactiveCommand<Unit, Unit> Stop { get; set; }
+        void StopCommand()
+        {
+            if (playbackController == null)
+                return;
+
+            playbackController.Stop();
         }
     }
 }

@@ -47,33 +47,9 @@ namespace Majora.Views
 
             timeBlock = this.Find<TextBlock>("timeBlock");
 
-            playPauseButton = this.Find<Button>("playPauseButton");
             muteButton = this.Find<Button>("muteButton");
         }
 
-        public void OnPlayPauseButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (playbackController == null)
-                return;
-
-            if (playbackController.IsPlaying())
-            {
-                playbackController.Pause();
-                playPauseButton.Content = "Play";
-            }
-            else
-            {
-                playbackController.Play();
-                playPauseButton.Content = "Pause";
-            }
-        }
-        public void OnStopButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (playbackController == null)
-                return;
-
-            playbackController.Stop();
-        }
         public void OnMuteButtonClicked(object sender, RoutedEventArgs e)
         {
             if (playbackController == null)
