@@ -43,52 +43,14 @@ namespace Majora.Views
         {
             AvaloniaXamlLoader.Load(this);
 
-            openButton = this.Find<MenuItem>("openButton");
             recentFileButton = this.Find<MenuItem>("recentFileButton");
 
-            cover = this.Find<Image>("cover");
-            albumBlock = this.Find<TextBlock>("albumBlock");
-            artistBlock = this.Find<TextBlock>("artistBlock");
-            titleBlock = this.Find<TextBlock>("titleBlock");
             timeBlock = this.Find<TextBlock>("timeBlock");
 
             playPauseButton = this.Find<Button>("playPauseButton");
             muteButton = this.Find<Button>("muteButton");
         }
 
-        private void SetNowPlayingData()
-        {
-            cover.Source = playbackController.CurrentAudioMetadata.Cover;
-            albumBlock.Text = playbackController.CurrentAudioMetadata.Album;
-            artistBlock.Text = playbackController.CurrentAudioMetadata.Artist;
-            titleBlock.Text = playbackController.CurrentAudioMetadata.Title;
-        }
-        private async Task<string> GetPath()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filters.Add(allFilesFilter);
-            string[] result = await dialog.ShowAsync((Window)this.Parent);
-            return string.Join(" ", result);
-        }
-        private void Start(string path)
-        {
-            if(playbackController != null)
-                playbackController.Dispose();
-
-            playbackController = new PlaybackController();
-            playbackController.Initialize(path);
-            playbackController.Play();
-            SetNowPlayingData();
-            playPauseButton.Content = "Pause";
-
-        }
-
-        public async void OnOpenButtonClicked(object sender, RoutedEventArgs e)
-        {
-            string path = await GetPath();
-            if (path != "")
-                Start(path);
-        }
         public void OnPlayPauseButtonClicked(object sender, RoutedEventArgs e)
         {
             if (playbackController == null)

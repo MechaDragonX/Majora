@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Majora.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject
     {
         private static PlaybackController playbackController = null;
         private static readonly FileDialogFilter allFilesFilter = new FileDialogFilter()
@@ -28,23 +28,54 @@ namespace Majora.ViewModels
             }
         };
 
-        public string PlayPause { get; set; }
-        public string Mute { get; set; }
-        public Bitmap Cover { get; set; }
-        public string Album { get; set; }
-        public string Artist { get; set; }
-        public string Title { get; set; }
+        private string playPauseText;
+        public string PlayPauseText
+        {
+            get => playPauseText;
+            set => this.RaiseAndSetIfChanged(ref playPauseText, value);
+        }
+        private string muteText;
+        public string MuteText
+        {
+            get => muteText;
+            set => this.RaiseAndSetIfChanged(ref muteText, value);
+        }
+        private Bitmap cover;
+        public Bitmap Cover
+        {
+            get => cover;
+            set => this.RaiseAndSetIfChanged(ref cover, value);
+        }
+        private string album;
+        public string Album
+        {
+            get => album;
+            set => this.RaiseAndSetIfChanged(ref album, value);
+        }
+        private string artist;
+        public string Artist
+        {
+            get => artist;
+            set => this.RaiseAndSetIfChanged(ref artist, value);
+        }
+        private string title;
+        public string Title
+        {
+            get => title;
+            set => this.RaiseAndSetIfChanged(ref title, value);
+        }
 
         public MainWindowViewModel()
         {
-            PlayPause = "Play";
-            Mute = "Mute";
+            PlayPauseText = "Play";
+            MuteText = "Mute";
             Cover = null;
             Album = "";
             Artist = "";
             Title = "";
 
             OpenFile = ReactiveCommand.Create(OpenFileCommand);
+            PlayPause = ReactiveCommand.Create(PlayPauseCommand);
         }
 
         public ReactiveCommand<Unit, Unit> OpenFile { get; }
@@ -52,7 +83,13 @@ namespace Majora.ViewModels
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filters.Add(allFilesFilter);
-            string[] result = await dialog.ShowAsync((MainWindow)Application.Current.ApplicationLifetime);
+
+            string[] result = null;
+            if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                result = await dialog.ShowAsync(desktop.MainWindow);
+            else if (Application.Current.ApplicationLifetime is ISingleViewApplicationLifetime singleView)
+                result = await dialog.ShowAsync((Window)singleView.MainView.Parent);
+
             return result[0];
         }
         private void Start(string path)
@@ -64,7 +101,7 @@ namespace Majora.ViewModels
             playbackController.Initialize(path);
             playbackController.Play();
             SetNowPlayingData();
-            PlayPause = "Pause";
+            PlayPauseText = "Pause";
 
         }
         private void SetNowPlayingData()
@@ -79,6 +116,24 @@ namespace Majora.ViewModels
             string path = await GetPath();
             if (path != "")
                 Start(path);
+        }
+
+        public ReactiveCommand<Unit, Unit> PlayPause { get; }
+        void PlayPauseCommand()
+        {
+            if (playbackController == null)
+                return;
+
+            if (playbackController.IsPlaying())
+            {
+                playbackController.Pause();
+                PlayPauseText = "Play";
+            }
+            else
+            {
+                playbackController.Play();
+                PlayPauseText = "Pause";
+            }
         }
     }
 }
