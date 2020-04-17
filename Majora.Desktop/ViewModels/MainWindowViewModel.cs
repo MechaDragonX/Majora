@@ -88,8 +88,12 @@ namespace Majora.ViewModels
             Stop = ReactiveCommand.Create(StopCommand);
             Mute = ReactiveCommand.Create(MuteCommand);
 
-            if(Path.IsPathFullyQualified(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")))
-                PlayedAudio = DeserializePlayedAudio();
+            if(File.Exists(Path.Join(Environment.CurrentDirectory, "Data", "recent.json")))
+            {
+                var data = DeserializePlayedAudio();
+                if(data != null)
+                    PlayedAudio = data;
+            }
         }
         private static void SerializePlayedAudio()
         {
