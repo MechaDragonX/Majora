@@ -11,11 +11,9 @@
 
   <DockPanel>
     <Menu DockPanel.Dock="Top" Name="menu">
-      <MenuItem Header="File">
-        <MenuItem Header="Open..." Name="openButton" Command="{ Binding OpenFile }" />
-        <MenuItem Header="Recently Opened">
-          <MenuItem Header="file.wav"  Name="recentFileButton" />
-        </MenuItem>
+      <MenuItem Header="File" FontFamily="Meiryo">
+        <MenuItem Header="Open..." FontFamily="Meiryo" Name="openButton" Command="{ Binding OpenFile }" />
+        <MenuItem Header="Recently Opened" FontFamily="Meiryo" Items="{ Binding RecentlyPlayedMenu }" />
       </MenuItem>
     </Menu>
 
