@@ -47,4 +47,4 @@ At the moment the terminal program should be but the desktop program is no where
 The name is a reference to the video game, [*The Legend of Zelda: Majora's Mask*](https://en.wikipedia.org/wiki/The_Legend_of_Zelda:_Majora%27s_Mask). In the game, you help various people in the main quests, each time getting a special song or instrument associated with that race (Goron, Zora, etc.). As such, the progression is tied to the music. The meaning and impact of the game is tied to this musical progression. There's no special association with this progression however. I just like the name and the reference.
 
 ## When will this be done?
-Well...the terminal version is functional, but I'm making a GUI version...so let's say it's *in progress*.
+The terminal and desktop version are completely functional. Please see the [releases page](https://github.com/MechaDragonX/Majora/releases) for further details
