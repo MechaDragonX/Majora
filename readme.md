@@ -5,6 +5,32 @@ Majora is an audio player project. A terminal and desktop version are ostensibly
 
 ## How do I run it?
 You can get the latest .NET binaries from the [releases page](https://github.com/MechaDragonX/Bheithir/releases). **There are 64-bit Windows, macOS, and Linux builds available for the terminal and desktop GUI program.**
+### C++
+No binaries are available yet. The [SFML](https://www.sfml-dev.org/) library is necesarry for compilation.
+#### Linux
+- Debian-based Distributions
+    - Install the `libsfml-dev` package
+- Arch Linux-based Distributions
+    - install the `sfml` package
+#### macOS
+- Method 1: Command Line
+    - Install the [Homebrew](https://brew.sh/) package manager with the following command:
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+    - Install the `sfml` package.
+        - Supported on x86 Macs from Mojave onward, and all M1 Macs running Big Sur, and presumably all future versions.
+- Method 2: Via Xcode
+    - [See SFML's documentation](https://www.sfml-dev.org/tutorials/2.5/start-osx.php)
+#### Windows
+    - Method 1: Manually
+        - Download the version that corresponds to the C++ compiler you are using and copy all the folders to the corresponding locations where the compiler is located on your system.
+            - Detailed instructions for MinGW can be found on this website that explains how to install the [SDL](https://www.libsdl.org/) library.
+                - This should apply to other compilers. Since I primarily compile for Linux, I prefer using nearly the same thing across all systems.
+    - Method 2: Via Visual Studio (Uses Microsoft Visual C++)
+        - [See SFML's documentation](https://www.sfml-dev.org/tutorials/2.5/start-vc.php)
+    - Method 3: Via Code::Blocks (Uses MinGW)
+        - [See SFML's documentation](https://www.sfml-dev.org/tutorials/2.5/start-cb.php)
 
 ## What file types are supported right now?
 ### GUI Desktop Application (.NET)

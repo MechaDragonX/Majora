@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++20
+CXXFLAGS=-std=c++2a
 
 LDLIBS:=
 ifeq ($(OS),Windows_NT)
