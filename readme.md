@@ -14,10 +14,7 @@ No binaries are available yet. The [SFML](https://www.sfml-dev.org/) library is 
     - install the `sfml` package
 #### macOS
 - Method 1: Command Line
-    - Install the [Homebrew](https://brew.sh/) package manager with the following command:
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+    - Install the [Homebrew](https://brew.sh/) package manager with the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
     - Install the `sfml` package.
         - Supported on x86 Macs from Mojave onward, and all M1 Macs running Big Sur, and presumably all future versions.
 - Method 2: Via Xcode
